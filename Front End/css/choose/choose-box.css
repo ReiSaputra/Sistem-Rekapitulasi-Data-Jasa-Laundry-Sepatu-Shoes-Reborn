@@ -1,0 +1,12 @@
+.choose-box {
+  margin-top: 25px;
+}
+
+.choose-box a {
+  flex-basis: 500px;
+}
+
+.choose-box,
+a div > h3 {
+  font-size: 1.2rem;
+}
