@@ -1,0 +1,80 @@
+/* Root */
+html {
+  font-size: 1rem;
+}
+
+/* Div-Container */
+.div-container {
+  height: 100vh;
+}
+
+/* Div-Body */
+.div-body h1 {
+  font-size: 1.5rem;
+}
+
+.div-body img {
+  margin-top: 20px;
+  width: 18%;
+}
+
+
+/* Choose Box */
+.choose-box {
+  margin-top: 45px;
+}
+
+.choose-box a {
+  flex-basis: 500px;
+}
+
+.choose-box,
+a div > h3 {
+  font-size: 1.2rem;
+}
+
+.karyawan {
+  background-color: white;
+  color: #090927;
+  transition: 0.25s;
+  border-left: 2px;
+  border-top: 2px;
+  border-right: 1.5px;
+  border-bottom: 2px;
+  border-style: solid;
+  border-color: #090927;
+}
+
+.karyawan:hover {
+  background-color: #090927;
+  color: white;
+}
+
+.pemilik {
+  background-color: white;
+  color: #090927;
+  transition: 0.25s;
+  border-left: 1px;
+  border-top: 2px;
+  border-right: 2px;
+  border-bottom: 2px;
+  border-style: solid;
+  border-color: #090927;
+}
+
+.pemilik:hover {
+  background-color: #090927;
+  color: white;
+}
+
+/* Detail Box */
+.detail-box p {
+  font-size: 1rem;
+  background-color: rgb(234, 234, 234);
+  color: rgb(74, 74, 74);
+}
+
+.detail-box p span {
+  color: #090927;
+  font-weight: bolder;
+}
