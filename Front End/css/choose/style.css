@@ -5,7 +5,6 @@ html {
 
 /* Div-Container */
 .div-container {
-  height: 100vh;
 }
 
 /* Div-Body */
@@ -33,7 +32,7 @@ a div > h3 {
   font-size: 1.2rem;
 }
 
-.karyawan {
+.choose-box .karyawan {
   background-color: white;
   color: #090927;
   transition: 0.25s;
@@ -45,12 +44,12 @@ a div > h3 {
   border-color: #090927;
 }
 
-.karyawan:hover {
+.choose-box .karyawan:hover {
   background-color: #090927;
   color: white;
 }
 
-.pemilik {
+.choose-box .pemilik {
   background-color: white;
   color: #090927;
   transition: 0.25s;
@@ -62,7 +61,7 @@ a div > h3 {
   border-color: #090927;
 }
 
-.pemilik:hover {
+.choose-box .pemilik:hover {
   background-color: #090927;
   color: white;
 }
