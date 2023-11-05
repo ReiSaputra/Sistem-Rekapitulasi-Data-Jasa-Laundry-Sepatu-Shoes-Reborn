@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Jika Owner</title>
+    <link rel="stylesheet" href="../style/style1.css" />
+    <link rel="stylesheet" href="../font/BebasNeue-Regular.ttf" />
+</head>
+<body>
+    <div class="login-container">
+        <h2>Siapakah Anda?</h2>
+        <div class="fas fa-user"></div>
+        <div class="options">
+            <button class="employee">Karyawan</button>
+            <button class="owner">Owner</button>
+        </div>
+        <div class="message">Anda berada di tempat yang tepat! Untuk memulai, tekan 
+            tombol Masuk</div>
+        <button class="login-button" id="login-button">Masuk</button>
+        <script>
+            document.getElementById("login-button").addEventListener("click", function() {
+                window.location.href = "loginOwner.html";
+            });
+        </script>
+        
+    </div>
+</body>
+</html>
