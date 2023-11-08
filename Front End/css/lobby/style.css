@@ -31,3 +31,9 @@
   min-height: 75px;
   max-height: 75px;
 }
+
+/* Tab Menu */
+.tab-menu .row > div {
+  min-height: 90px;
+  max-height: 90px;
+}
