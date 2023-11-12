@@ -1,3 +1,18 @@
+a {
+  list-style: none;
+  text-decoration: none;
+}
+
+.list {
+  transition: 0.3s;
+  color: black;
+}
+
+.list:hover {
+  background-color: #090927;
+  color: white;
+}
+
 /* Nav */
 nav {
   background-color: #090927;
@@ -35,6 +50,17 @@ nav {
 .board {
 }
 
+/* Dashboard */
+.dashboard .title-dashboard {
+  background-color: #090927;
+  color: white;
+}
+
+.report .title-report {
+  background-color: #090927;
+  color: white;
+}
+
 /* Data-Table */
 .data-table {
   padding: 0;
@@ -58,5 +84,16 @@ nav {
 .tab-icon {
   width: 50px;
   height: 50px;
-  background-color: rgb(246, 208, 58);
+}
+
+.g {
+  color: rgb(18, 141, 18);
+}
+
+.r {
+  color: #b40d0d;
+}
+
+.y {
+  color: rgb(255, 222, 35);
 }
