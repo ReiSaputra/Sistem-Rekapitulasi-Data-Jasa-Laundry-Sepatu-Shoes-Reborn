@@ -32,14 +32,14 @@
           <div class="board border p-3">
             <!-- Dashboard -->
             <div class="dashboard border">
-              <h5 class="border p-2 rounded">Dashboard</h5>
+              <h6 class="border p-2 rounded"><strong>DASHBOARD</strong></h6>
               <!-- Dashboard-Child -->
               <ul class="dashboard-child border ps-4">
                 <li class="border d-flex rounded p-2">
                   <img src="" alt="" />
                   <h6>Data Pengerjaan</h6>
                 </li>
-                <li class="border d-flex rounded p-2">
+                <li class="border d-flex rounded p-2 mt-1">
                   <img src="" alt="" />
                   <h6>Data Pembelian</h6>
                 </li>
@@ -47,14 +47,14 @@
             </div>
             <!-- Report -->
             <div class="report border">
-              <h5 class="border p-2 rounded">Laporan</h5>
+              <h6 class="border p-2 rounded"><strong>LAPORAN</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child border ps-4">
                 <li class="border d-flex rounded p-2">
                   <img src="" alt="" />
                   <h6>Data Pengerjaan</h6>
                 </li>
-                <li class="border d-flex rounded p-2">
+                <li class="border d-flex rounded p-2 mt-1">
                   <img src="" alt="" />
                   <h6>Data Pembelian</h6>
                 </li>
@@ -66,14 +66,23 @@
         <div class="data-table col-9 border">
           <!-- Tab -->
           <div class="tab border d-flex align-items-center p-3">
-            <h4 class="border">Dashboard</h4>
+            <h4 class="border"><strong>Data Pengerjaan</strong></h4>
           </div>
           <!-- Tab Menu -->
-          <div class="tab-menu">
-            <div></div>
+          <div class="container-fluid tab-menu">
+            <div class="row border">
+              <div class="col-6 border">Data Pengerjaan Hari Ini</div>
+              <div class="col-6 border">Terselesaikan</div>
+            </div>
           </div>
           <div class="tabless">
-            
+            <div class="insert-menu border"></div>
+            <div class="tabless-body"></div>
+            <script>
+              document.getElementById("login-button").addEventListener("click", function() {
+                  window.location.href = "loginKaryawan.html";
+              });
+          </script>
           </div>
         </div>
       </div>
