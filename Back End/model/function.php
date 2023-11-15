@@ -3,5 +3,5 @@
 
     mySqlConnection();
 
-    
+    func
 ?>
