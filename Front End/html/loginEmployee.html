@@ -21,25 +21,24 @@
     <!-- Div-Container -->
     <div class="div-container container-fluid">
       <h2 class="text-center">
-        <strong>Selamat Datang<br />Owner!</strong>
+        <strong>Selamat Datang<br />Karyawan!</strong>
       </h2>
       <h6 class="text-center mt-3">
         Untuk tetap terhubung dengan kami silahkan login dengan<br />
         informasi pribadi Anda dengan akun dan kata sandi
       </h6>
       <div class="d-flex justify-content-center">
-        <form class="mt-5 w-50">
+        <form class="mt-5 w-50" method="post">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Email address</label>
-            <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" />
+            <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
+            <input type="text" autocomplete="off" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usn"/>
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" />
+            <input type="password" class="form-control" id="exampleInputPassword1" name="pass"/>
           </div>
-          <button type="submit" class="btn btn-primary px-4">Login</button>
-          <a href="lobbyPembelian.html" class="btn px-4 btn-primary">Create</a>
+          <button type="submit" class="btn btn-primary px-4" name="submit">Login</button>
         </form>
       </div>
     </div>
