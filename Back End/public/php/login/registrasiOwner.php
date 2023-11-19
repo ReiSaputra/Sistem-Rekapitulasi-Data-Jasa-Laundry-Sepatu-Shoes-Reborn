@@ -1,3 +1,20 @@
+<?php
+  require_once __DIR__ . "/../../../model/connection.php";
+
+  if(isset($_POST["createAccountOwner"]))
+  {
+    mySqlConnection();
+
+    $usernameOwn = $_POST["usn"];
+    $nameOwn = $_POST["name"];
+    $passwordOwn = $_POST["pass"];
+
+    $passwordOwnHash = password_hash($passwordOwn, PASSWORD_DEFAULT);
+
+    mysqli_query(mySqlConnection(), "INSERT INTO owner (owner_name, owner_username, owner_password) VALUES ('$nameOwn', '$usernameOwn', '$passwordOwnHash')");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -29,15 +46,19 @@
       <div class="d-flex justify-content-center">
         <form class="mt-5 w-50" method="post">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-            <input type="text" autocomplete="off" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usn"/>
+            <label for="exampleInputUsn" class="form-label">Username</label>
+            <input type="text" autocomplete="off" class="form-control" id="exampleInputUsn" aria-describedby="emailHelp" name="usn" required/>
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" name="usn"/>
+            <label for="exampleInputName" class="form-label">Nama Lengkap</label>
+            <input type="text" autocomplete="off" class="form-control" id="exampleInputName" aria-describedby="emailHelp" name="name" required/>
           </div>
-          <button type="submit" class="btn btn-primary px-4">Buat Akun</button>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Password</label>
+            <input type="password" class="form-control" id="exampleInputPassword1" name="pass" required/>
+          </div>
+          <button type="submit" class="btn btn-primary px-4 mb-4" name="createAccountOwner">Buat Akun</button>
         </form>
       </div>
     </div>
