@@ -6,6 +6,6 @@
         $password = "";
         $dbname = "shoes_reborn";
         
-        return mysqli_connect($host, $user, $password, $dbname );
+        return mysqli_connect($host, $user, $password, $dbname);
     }
 ?>
