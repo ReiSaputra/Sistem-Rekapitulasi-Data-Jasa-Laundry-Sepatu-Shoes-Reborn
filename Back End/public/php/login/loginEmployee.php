@@ -1,31 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Owner</title>
-    <link rel="stylesheet" href="../css/lobby/style1.css" />
-    <link rel="stylesheet" href="../css/lobby/style2.css" />
-    <link rel="stylesheet" href="../css/lobby/style.css" />
-</head>
-<body>
-    <div id="login-container">
-        <h1>Selamat datang<br>
-             Owner!</h1>
-        <form id="login-form">
-            <div>
-                <input type="text" placeholder="Username" name="username" />
-            </div>
-            <div>
-                <input type="password" placeholder="Password" name="password" />
-            </div>
-            <button type="submit" id="login-button">Login</button>
-            <button type="submit" id="login-button">Buat Akun</button>
-        </form>
-    </div>
-</body>
-=======
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,14 +14,14 @@
     <nav class="navbar p-3">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="../assets/img/JPG/LOGO-B-300x300.png" alt="Shoes Reborn" width="40" height="40" />
+          <img src="../../../assets/img/JPG/LOGO-B-300x300.png" alt="Shoes Reborn" width="40" height="40" />
         </a>
       </div>
     </nav>
     <!-- Div-Container -->
     <div class="div-container container-fluid">
       <h2 class="text-center">
-        <strong>Selamat Datang<br />Owner!</strong>
+        <strong>Selamat Datang<br />Karyawan!</strong>
       </h2>
       <h6 class="text-center mt-3">
         Untuk tetap terhubung dengan kami silahkan login dengan<br />
@@ -57,19 +31,17 @@
         <form class="mt-5 w-50" method="post">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-            <input type="text" autocomplete="off" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usn" />
+            <input type="text" autocomplete="off" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usn"/>
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" name="pass" />
+            <input type="password" class="form-control" id="exampleInputPassword1" name="pass"/>
           </div>
           <button type="submit" class="btn btn-primary px-4" name="submit">Login</button>
-          <a href="registrasiOwner.html" class="btn px-4 btn-outline-primary">Buat Akun</a>
         </form>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
->>>>>>> 51508c3b7fc41d8d7ae5ce747b92712f082e3a71
 </html>

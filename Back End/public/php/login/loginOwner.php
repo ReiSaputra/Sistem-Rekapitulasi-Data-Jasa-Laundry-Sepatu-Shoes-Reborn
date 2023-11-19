@@ -1,31 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<<<<<<< HEAD
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Owner</title>
-    <link rel="stylesheet" href="../css/lobby/style1.css" />
-    <link rel="stylesheet" href="../css/lobby/style2.css" />
-    <link rel="stylesheet" href="../css/lobby/style.css" />
-</head>
-<body>
-    <div id="login-container">
-        <h1>Selamat datang<br>
-             Owner!</h1>
-        <form id="login-form">
-            <div>
-                <input type="text" placeholder="Username" name="username" />
-            </div>
-            <div>
-                <input type="password" placeholder="Password" name="password" />
-            </div>
-            <button type="submit" id="login-button">Login</button>
-            <button type="submit" id="login-button">Buat Akun</button>
-        </form>
-    </div>
-</body>
-=======
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -40,7 +14,7 @@
     <nav class="navbar p-3">
       <div class="container-fluid">
         <a class="navbar-brand" href="#">
-          <img src="../assets/img/JPG/LOGO-B-300x300.png" alt="Shoes Reborn" width="40" height="40" />
+          <img src="../../../assets/img/JPG/LOGO-B-300x300.png" alt="Shoes Reborn" width="40" height="40" />
         </a>
       </div>
     </nav>
@@ -65,11 +39,10 @@
             <input type="password" class="form-control" id="exampleInputPassword1" name="pass" />
           </div>
           <button type="submit" class="btn btn-primary px-4" name="submit">Login</button>
-          <a href="registrasiOwner.html" class="btn px-4 btn-outline-primary">Buat Akun</a>
+          <a href="registrasiOwner.php" class="btn px-4 btn-outline-primary">Buat Akun</a>
         </form>
       </div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
   </body>
->>>>>>> 51508c3b7fc41d8d7ae5ce747b92712f082e3a71
 </html>

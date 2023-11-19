@@ -1,0 +1,99 @@
+a {
+  list-style: none;
+  text-decoration: none;
+}
+
+.list {
+  transition: 0.3s;
+  color: black;
+}
+
+.list:hover {
+  background-color: #090927;
+  color: white;
+}
+
+/* Nav */
+nav {
+  background-color: #090927;
+}
+
+/* Div-Container */
+.div-container {
+  /* background-color: blue; */
+}
+
+/* Grid */
+.grid {
+  height: 100vh;
+}
+
+/* Menu */
+.menu {
+  padding: 0;
+  /* background-color: #090927; */
+  /* color: white; */
+}
+
+/* Profile */
+.profile {
+  max-height: 400px;
+  border-top: 0px;
+  border-bottom: 1px;
+  border-left: 0px;
+  border-right: 0px;
+  border-color: rgb(200, 200, 200);
+  border-style: solid;
+}
+
+/* Board */
+.board {
+}
+
+/* Dashboard */
+.dashboard .title-dashboard {
+  background-color: #090927;
+  color: white;
+}
+
+.report .title-report {
+  background-color: #090927;
+  color: white;
+}
+
+/* Data-Table */
+.data-table {
+  padding: 0;
+}
+
+/* Data-Table */
+/* Tab */
+.tab {
+  min-height: 85px;
+  max-height: 85px;
+  background-color: rgb(10, 10, 53);
+  color: white;
+}
+
+/* Tab Menu */
+.tab-menu .row > div {
+  min-height: 90px;
+  max-height: 90px;
+}
+
+.tab-icon {
+  width: 50px;
+  height: 50px;
+}
+
+.g {
+  color: rgb(18, 141, 18);
+}
+
+.r {
+  color: #b40d0d;
+}
+
+.y {
+  color: rgb(255, 222, 35);
+}
