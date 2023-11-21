@@ -11,7 +11,17 @@
 
     $passwordOwnHash = password_hash($passwordOwn, PASSWORD_DEFAULT);
 
-    mysqli_query(mySqlConnection(), "INSERT INTO owner (owner_name, owner_username, owner_password) VALUES ('$nameOwn', '$usernameOwn', '$passwordOwnHash')");
+    $sqlInsert = "SELECT owner_username FROM owner WHERE owner_username = '$usernameOwn'";
+    $queryCheckOwn = mysqli_query(mySqlConnection(), $sqlInsert);
+
+    if(mysqli_num_rows($queryCheckOwn) > 0)
+    {
+      $errorCheckOwn = true;
+    } else 
+    {
+      mysqli_query(mySqlConnection(), "INSERT INTO owner (owner_name, owner_username, owner_password) VALUES ('$nameOwn', '$usernameOwn', '$passwordOwnHash')");
+    }
+
   }
 ?>
 
@@ -48,7 +58,11 @@
           <div class="mb-3">
             <label for="exampleInputUsn" class="form-label">Username</label>
             <input type="text" autocomplete="off" class="form-control" id="exampleInputUsn" aria-describedby="emailHelp" name="usn" required/>
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <div id="emailHelp" class="form-text">
+              <?php if(isset($errorCheckOwn)) { ?>
+                <p class="text-danger">Username telah dibuat! Silahkan cari Username lain.</p>
+              <?php } ?>
+            </div>
           </div>
           <div class="mb-3">
             <label for="exampleInputName" class="form-label">Nama Lengkap</label>
