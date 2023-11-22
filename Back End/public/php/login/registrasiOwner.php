@@ -20,6 +20,7 @@
     } else 
     {
       mysqli_query(mySqlConnection(), "INSERT INTO owner (owner_name, owner_username, owner_password) VALUES ('$nameOwn', '$usernameOwn', '$passwordOwnHash')");
+      header("Location: loginOwner.php");
     }
 
   }
