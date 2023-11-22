@@ -1,3 +1,31 @@
+<?php
+  require_once __DIR__ . "/../../../model/connection.php";
+
+  if(isset($_POST["submit"]))
+  {
+    mySqlConnection();
+
+    $usnOwn = $_POST["usn"];
+    $passOwn = $_POST["pass"];
+
+    $checkLogOwn = "SELECT owner_username, owner_password FROM owner WHERE owner_username = '$usnOwn'";
+
+    $queryCheckUsnOwn = mysqli_query(mySqlConnection(), $checkLogOwn);
+
+    
+    if(mysqli_num_rows($queryCheckUsnOwn) > 0)
+    {
+      $fetch = mysqli_fetch_assoc($queryCheckUsnOwn);
+      $ownerVerif = $fetch["owner_username"];
+      $passVerif = $fetch["owner_password"];
+    }
+    else
+    {
+      $error = true;
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,13 +58,13 @@
       <div class="d-flex justify-content-center">
         <form class="mt-5 w-50" method="post">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
-            <input type="text" autocomplete="off" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usn" />
+            <label for="exampleInputEmail1" class="form-label">Username</label>
+            <input type="text" autocomplete="off" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usn" required/>
             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
-            <input type="password" class="form-control" id="exampleInputPassword1" name="pass" />
+            <input type="password" class="form-control" id="exampleInputPassword1" name="pass" required/>
           </div>
           <button type="submit" class="btn btn-primary px-4" name="submit">Login</button>
           <a href="registrasiOwner.php" class="btn px-4 btn-outline-primary">Buat Akun</a>
