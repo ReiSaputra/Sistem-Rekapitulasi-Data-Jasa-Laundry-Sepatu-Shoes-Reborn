@@ -18,10 +18,20 @@
       $fetch = mysqli_fetch_assoc($queryCheckUsnOwn);
       $ownerVerif = $fetch["owner_username"];
       $passVerif = $fetch["owner_password"];
+
+      if(password_verify($passOwn, $passVerif))
+      {
+        echo "selamat datang";
+      }
+      else
+      {
+        echo "data tidak ditemukan";
+      }
     }
     else
     {
       $error = true;
+      echo "data tidak ada";
     }
   }
 ?>
