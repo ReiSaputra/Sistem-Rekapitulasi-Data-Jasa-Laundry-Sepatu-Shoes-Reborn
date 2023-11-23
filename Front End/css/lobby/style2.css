@@ -1,0 +1,49 @@
+body {
+    font-family: Bebas-Neuo;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+}
+
+#login-container {
+    width: 800px;
+    padding: 20px;
+    border-radius: 10px;
+    text-align: center;
+}
+
+#login-container h1 {
+    color: #0e0f0f;
+}
+
+#login-form {
+    margin-top: 10px;
+}
+
+#login-form input {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+}
+
+#login-button {
+    background-color: #042135;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+#create-account-link {
+    color:  #042135;
+    text-decoration: none;
+    margin-top: 10px;
+    display: block;
+}
+
+#icon-username, #icon-password {
+    vertical-align: middle;
+    margin-right: 10px;
+}
