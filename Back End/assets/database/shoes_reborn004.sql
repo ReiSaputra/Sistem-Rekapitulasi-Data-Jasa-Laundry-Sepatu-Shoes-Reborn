@@ -44,7 +44,7 @@ CREATE TABLE `employee` (
   `employee_id` int(11) NOT NULL,
   `employee_name` varchar(120) DEFAULT NULL,
   `employee_username` varchar(120) DEFAULT NULL,
-  `employee_password` varchar(50) DEFAULT NULL,
+  `employee_password` varchar(120) DEFAULT NULL,
   `employee_date_of_join` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
@@ -81,7 +81,7 @@ CREATE TABLE `owner` (
   `owner_id` int(11) NOT NULL,
   `owner_name` varchar(120) DEFAULT NULL,
   `owner_username` varchar(120) DEFAULT NULL,
-  `owner_password` varchar(50) DEFAULT NULL,
+  `owner_password` varchar(120) DEFAULT NULL,
   `owner_id_expense` int(11) DEFAULT NULL,
   `owner_id_report` int(11) DEFAULT NULL,
   `owner_id_profit` int(11) DEFAULT NULL
