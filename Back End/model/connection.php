@@ -4,7 +4,7 @@
         $host = "localhost";
         $user = "root";
         $password = "";
-        $dbname = "shoes_reborn004";
+        $dbname = "reborn";
         
         return mysqli_connect($host, $user, $password, $dbname);
     }
