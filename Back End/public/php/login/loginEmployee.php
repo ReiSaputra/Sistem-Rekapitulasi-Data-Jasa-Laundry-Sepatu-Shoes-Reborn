@@ -1,3 +1,40 @@
+<?php
+  require_once __DIR__ . "/../../../model/connection.php";
+
+  if(isset($_POST["submit"]))
+  {
+    mySqlConnection();
+
+    $usnEmp = $_POST["usn"];
+    $passEmp = $_POST["pass"];
+
+    $checkLogEmp = "SELECT employee_username, employee_password FROM employee WHERE employee_username = '$usnEmp'";
+
+    $queryCheckUsnEmp = mysqli_query(mySqlConnection(), $checkLogEmp);
+
+    
+    if(mysqli_num_rows($queryCheckUsnEmp) > 0)
+    {
+      $fetch = mysqli_fetch_assoc($queryCheckUsnEmp);
+      $UserVerif = $fetch["employee_username"];
+      $passVerif = $fetch["employee_password"];
+
+      if(password_verify($passEmp, $passVerif))
+      {
+        echo "selamat datang";
+      }
+      else
+      {
+        $error = true;
+      }
+    }
+    else
+    {
+      $error = true;
+    }
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -30,9 +67,11 @@
       <div class="d-flex justify-content-center">
         <form class="mt-5 w-50" method="post">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Nama Lengkap</label>
+            <label for="exampleInputEmail1" class="form-label">Username</label>
             <input type="text" autocomplete="off" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usn"/>
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <?php if(isset($error)) { ?>
+              <div id="emailHelp" class="form-text text-danger">Username atau Password salah!</div>
+            <?php } ?>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>

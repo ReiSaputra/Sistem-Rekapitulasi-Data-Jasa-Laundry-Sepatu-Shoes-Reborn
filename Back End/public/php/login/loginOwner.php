@@ -25,13 +25,12 @@
       }
       else
       {
-        echo "data tidak ditemukan";
+        $error = true;
       }
     }
     else
     {
       $error = true;
-      echo "data tidak ada";
     }
   }
 ?>
@@ -70,7 +69,9 @@
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Username</label>
             <input type="text" autocomplete="off" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" name="usn" required/>
-            <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+            <?php if(isset($error)) { ?>
+              <div id="emailHelp" class="form-text text-danger">Username atau Password salah!</div>
+            <?php } ?>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Password</label>
