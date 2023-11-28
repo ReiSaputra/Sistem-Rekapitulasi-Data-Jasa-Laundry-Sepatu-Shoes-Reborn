@@ -82,7 +82,7 @@
           <div>
             <div class="tab borders d-flex align-items-center p-3">
               <i class="fa fa-search ms-3"></i>
-              <h4 class="borders ms-3 mt-2"><strong>Dashboard</strong></h4>
+              <h4 class="borders ms-3 mt-2"><strong>Buat Akun Karyawan</strong></h4>
             </div>
           </div>
           <!-- Tab Menu -->
