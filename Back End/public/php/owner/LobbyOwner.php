@@ -26,7 +26,7 @@
           <!-- Profile -->
           <div class="profile p-3">
             <h6 class="borders p-2 mb-0"><a href="cekData.html">Muhammad Fathurraihan Saputra</a></h6>
-            <h6 class="borders mb-0 p-2">Karyawan</h6>
+            <h6 class="borders mb-0 p-2">Owner</h6>
           </div>
           <!-- Board -->
           <div class="board borders p-3">

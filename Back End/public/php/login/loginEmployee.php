@@ -21,7 +21,7 @@
 
       if(password_verify($passEmp, $passVerif))
       {
-        echo "selamat datang";
+        header("Location: ../karyawan/lobbyPengerjaan.php");
       }
       else
       {

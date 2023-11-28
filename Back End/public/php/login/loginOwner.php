@@ -21,7 +21,7 @@
 
       if(password_verify($passOwn, $passVerif))
       {
-        echo "selamat datang";
+        header("Location: ../owner/LobbyOwner.php");
       }
       else
       {
