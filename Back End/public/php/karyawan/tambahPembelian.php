@@ -35,13 +35,13 @@
               <h6 class="title-dashboard borders p-2"><strong>DASHBOARD</strong></h6>
               <!-- Dashboard-Child -->
               <ul class="dashboard-child borders ps-4">
-                <a href="lobbyPengerjaan.html">
+                <a href="lobbyPengerjaan.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Data Pengerjaan</h6>
                   </li>
                 </a>
-                <a href="lobbyPembelian.html">
+                <a href="lobbyPembelian.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Data Pembelian</h6>
@@ -54,7 +54,7 @@
               <h6 class="title-report borders p-2"><strong>LAPORAN</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href="">
+                <a href="lobbyLaporan.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Buat Laporan</h6>

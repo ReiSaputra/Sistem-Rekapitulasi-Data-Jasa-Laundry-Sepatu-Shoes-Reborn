@@ -54,7 +54,7 @@
               <h6 class="title-report borders p-2"><strong>LAPORAN</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href="buatLaporan.pjp">
+                <a href="lobbyLaporan.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Buat Laporan</h6>
