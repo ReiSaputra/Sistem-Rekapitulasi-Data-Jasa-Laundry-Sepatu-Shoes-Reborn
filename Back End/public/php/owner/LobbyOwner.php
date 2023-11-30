@@ -1,3 +1,20 @@
+<?php
+// Lakukan session
+session_start();
+
+// Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
+if(!isset($_GET["username"]) && !isset($_GET["id"]))
+{
+  // Jika Benar
+  header("Location: ../login/loginOwner.php");
+}
+else
+{
+  // Jika salah
+  $_SESSION["username"] = $_GET["username"];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,7 +42,7 @@
         <div class="menu col-3 borders shadow">
           <!-- Profile -->
           <div class="profile p-3">
-            <h6 class="borders p-2 mb-0"><a href="cekData.html">Muhammad Fathurraihan Saputra</a></h6>
+            <h6 class="borders p-2 mb-0"><a href="cekData.php"><?php echo $_SESSION["username"]; ?></a></h6>
             <h6 class="borders mb-0 p-2">Owner</h6>
           </div>
           <!-- Board -->
@@ -35,7 +52,7 @@
               <h6 class="title-dashboard borders p-2"><strong>LAPORAN KARYAWAN</strong></h6>
               <!-- Dashboard-Child -->
               <ul class="dashboard-child borders ps-4">
-                <a href="lobbyPengerjaan.php">
+                <a href="">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Dashboard</h6>
@@ -48,7 +65,7 @@
               <h6 class="title-report borders p-2"><strong>HISTORI</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href=".php">
+                <a href="historiOwner.php?username=$ownerVerif&id=$idVerif.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Histori Pengerjaan</h6>
