@@ -1,4 +1,6 @@
 <?php
+  session_start();
+
   require_once __DIR__ . "/../../../model/connection.php";
 
   if(isset($_POST["submit"]))
@@ -30,7 +32,8 @@
       if(password_verify($passOwn, $passVerif))
       {
         // Jika benar halaman dipindahkan ke owner sekalian membawa
-        header("Location: ../owner/LobbyOwner.php?username=$ownerVerif&id=$idVerif.php");
+        $_SESSION["username"] = $ownerVerif;
+        header("Location: ../owner/LobbyOwner.php?");
       }
       else
       {

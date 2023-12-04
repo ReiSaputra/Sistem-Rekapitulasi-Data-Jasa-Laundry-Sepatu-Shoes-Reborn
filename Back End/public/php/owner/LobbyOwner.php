@@ -1,18 +1,27 @@
 <?php
-// Lakukan session
-session_start();
+  // Lakukan session
+  session_start();
 
-// Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
-if(!isset($_GET["username"]) && !isset($_GET["id"]))
-{
-  // Jika Benar
+  require_once __DIR__ . "/../../../model/connection.php";
+
+  // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
+  if(!isset($_SESSION["username"]))
+  {
+  // Jika Benar salah
   header("Location: ../login/loginOwner.php");
-}
-else
-{
-  // Jika salah
-  $_SESSION["username"] = $_GET["username"];
-}
+  }
+
+  $sql = "SELECT * FROM employee";
+
+  $sql_query = mysqli_query(mySqlConnection(), $sql);
+
+  while($rows = mysqli_fetch_assoc($sql_query))
+  {
+    foreach ($rows as $row)
+    {
+      echo $row;
+    }
+  }
 ?>
 
 <!DOCTYPE html>
@@ -77,7 +86,7 @@ else
               <h6 class="title-report borders p-2"><strong>KARYAWAN</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href=".php">
+                <a href="dataKaryawan.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Data Karyawan</h6>
