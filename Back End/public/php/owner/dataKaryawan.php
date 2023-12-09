@@ -1,13 +1,19 @@
 <?php
-// Lakukan session
-session_start();
+  // Lakukan session
+  session_start();
 
-// Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
-if(!isset($_SESSION["username"]))
-{
-  // Jika Benar salah
-  header("Location: ../login/loginOwner.php");
-}
+  require_once __DIR__ . "/../../../model/connection.php";
+
+  // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
+  if(!isset($_SESSION["username"]))
+  {
+    // Jika Benar salah
+    header("Location: ../login/loginOwner.php");
+  }
+
+  $sql = "SELECT * FROM employee";
+
+  $sql_query = mysqli_query(mySqlConnection(), $sql);
 ?>
 
 <!DOCTYPE html>
@@ -47,7 +53,7 @@ if(!isset($_SESSION["username"]))
               <h6 class="title-dashboard borders p-2"><strong>LAPORAN KARYAWAN</strong></h6>
               <!-- Dashboard-Child -->
               <ul class="dashboard-child borders ps-4">
-                <a href="">
+                <a href="lobbyOwner.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Dashboard</h6>
@@ -60,7 +66,7 @@ if(!isset($_SESSION["username"]))
               <h6 class="title-report borders p-2"><strong>HISTORI</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href="historiOwner.php?username=$ownerVerif&id=$idVerif.php">
+                <a href="historiOwner.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Histori Pengerjaan</h6>
@@ -106,41 +112,42 @@ if(!isset($_SESSION["username"]))
                 </div>
                 <div class="tab-box-title ms-2">
                   <h6 class="tab-title"><strong>Total Karyawan</strong></h6>
-                  <h6 class="tab-number">5</h6>
+                  <h6 class="tab-number"><?php echo mysqli_num_rows($sql_query); ?></h6>
                 </div>
               </div>
             </div>
           </div>
           <div class="tabless mt-4 ps-4 pe-4 pb-4">
-            <div class="insert-menu borders d-flex justify-content-end mb-3">
-              <a class="btn ps-5 pe-5 btn-outline-dark" href="tambahPembelian.php"> <img src="" alt="" />Tambah Pembelian</a>
-            </div>
             <table class="table">
               <thead>
                 <tr>
                   <th scope="col">No</th>
-                  <th scope="col">Nama Barang</th>
-                  <th scope="col">Tanggal Pembelian</th>
-                  <th scope="col">Pengajuan</th>
-                  <th scope="col">Harga</th>
+                  <th scope="col">Nama Karyawan</th>
+                  <th scope="col">Username</th>
+                  <th scope="col">Tanggal Bergabung</th>
                   <th scope="col">Opsi</th>
                 </tr>
               </thead>
               <tbody>
+                <?php
+                  while($rows = mysqli_fetch_assoc($sql_query))
+                  {
+                ?>
                 <tr>
                   <th scope="row">1</th>
-                  <td>Kain Lap</td>
-                  <td>15 November 2023</td>
-                  <td>Adi</td>
-                  <td>Rp. 150.000.00</td>
+                  <td><?php echo $rows["employee_name"]; ?></td>
+                  <td><?php echo $rows["employee_username"]; ?></td>
+                  <td><?php echo $rows["employee_date_of_join"]; ?></td>
                   <td>
                     <div>
-                      <a class="btn btn-success" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-check me-2"></i>Selesai</a>
-                      <a class="btn btn-primary" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
-                      <a class="btn btn-danger" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-trash me-2"></i>Hapus</a>
+                      <a class="btn btn-primary" href="detailKaryawan.php"><img src="" alt="" /><i class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
+                      <a class="btn btn-danger" href="detailKaryawan.php"><img src="" alt="" /><i class="fa-solid fa-trash me-2"></i>Hapus</a>
                     </div>
                   </td>
                 </tr>
+                <?php 
+                  } 
+                ?>
               </tbody>
             </table>
           </div>

@@ -7,20 +7,8 @@
   // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
   if(!isset($_SESSION["username"]))
   {
-  // Jika Benar salah
-  header("Location: ../login/loginOwner.php");
-  }
-
-  $sql = "SELECT * FROM employee";
-
-  $sql_query = mysqli_query(mySqlConnection(), $sql);
-
-  while($rows = mysqli_fetch_assoc($sql_query))
-  {
-    foreach ($rows as $row)
-    {
-      echo $row;
-    }
+    // Jika Benar salah
+    header("Location: ../login/loginOwner.php");
   }
 ?>
 
@@ -61,7 +49,7 @@
               <h6 class="title-dashboard borders p-2"><strong>LAPORAN KARYAWAN</strong></h6>
               <!-- Dashboard-Child -->
               <ul class="dashboard-child borders ps-4">
-                <a href="">
+                <a href="lobbyOwner.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Dashboard</h6>
@@ -74,7 +62,7 @@
               <h6 class="title-report borders p-2"><strong>HISTORI</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href="historiOwner.php?username=$ownerVerif&id=$idVerif.php">
+                <a href="historiOwner.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Histori Pengerjaan</h6>
