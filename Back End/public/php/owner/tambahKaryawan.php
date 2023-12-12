@@ -30,15 +30,12 @@
     // Jika username untuk username lebih dari 0
     if(mysqli_num_rows($querySelect) > 0)
     {
-      echo "data gda coeg";
+      $error = true;
     }
     else
     {
-      // Hashing Password
-      $passwordHash = password_hash($empPassword, PASSWORD_DEFAULT);
-
       // Masukkan data
-      $sqlInsert = "INSERT INTO employee (employee_name, employee_username, employee_password, employee_date_of_join) VALUES ('$empName', '$empUsername', '$passwordHash', '$newDate')";
+      $sqlInsert = "INSERT INTO employee (employee_name, employee_username, employee_password, employee_date_of_join) VALUES ('$empName', '$empUsername', '$empPassword', '$newDate')";
 
       // Jalankan
       $querySelect = mysqli_query(mySqlConnection(), $sqlInsert);
@@ -99,7 +96,7 @@
               <h6 class="title-report borders p-2"><strong>HISTORI</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href=".php">
+                <a href="historiPengerjaan.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Histori Pengerjaan</h6>
@@ -125,6 +122,9 @@
                 </a>
               </ul>
             </div>
+            <a href="../logout/logout.php" class="text-danger">
+              <h6 class="title-report borders p-2"><strong>LOGOUT</strong></h6>
+            </a>
           </div>
         </div>
         <!-- Data-Table -->
@@ -142,6 +142,14 @@
               <div class="mb-3">
                 <label for="exampleInputUsername" class="form-label">Username</label>
                 <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Masukkan Username Karyawan" autocomplete="off" name="username" required />
+                <?php
+                  if(isset($error))
+                  {
+                ?>
+                <p style="color: red;">Username sudah digunakan, silahkan pilih yang lain.</p>
+                <?php  
+                  }
+                ?>
               </div>
               <div class="mb-3">
                 <label for="exampleInputNama" class="form-label">Nama</label>

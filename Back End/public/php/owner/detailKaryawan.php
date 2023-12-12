@@ -1,20 +1,44 @@
 <?php
-  // Lakukan session
   session_start();
 
   require_once __DIR__ . "/../../../model/connection.php";
 
-  // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
   if(!isset($_SESSION["username"]))
   {
-    // Jika Benar salah
-    header("Location: ../login/loginOwner.php");
+  // Jika Benar salah
+  header("Location: ../login/loginOwner.php");
   }
 
-  $sql = "SELECT * FROM employee";
+  // Jika tombol sumit ditekan
+  if(isset($_GET["id"]))
+  {
+    $id = $_GET["id"];
 
-  $sql_query = mysqli_query(mySqlConnection(), $sql);
+    $sql = "SELECT * FROM employee WHERE employee_id = $id";
+    $query = mysqli_query(mySqlConnection(), $sql);
+  }
+
+  if(isset($_POST["submit"]))
+  {
+        $empId = $_POST["id"] ; // URL id
+        $empName = $_POST["nama"]; // URL nama
+        $empUsername = $_POST["username"]; // URL Username 
+        $empPassword = $_POST["password"]; // URL Password
+        $empDate = $_POST["tanggal"]; // URL tanggal
+
+        $sql = "UPDATE employee SET
+                employee_name = '$empName',
+                employee_username = '$empUsername',
+                employee_password = '$empPassword',
+                employee_date_of_join = '$empDate'
+                WHERE employee_id = $empId";
+
+        $query = mysqli_query(mySqlConnection(), $sql);
+
+        header("Location: dataKaryawan.php");
+  }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -30,7 +54,7 @@
   <body>
     <nav class="navbar p-3 shadow">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="">
           <img src="../../../assets/img/JPG/LOGO-W-300x300.png" alt="Shoes Reborn" width="40" height="40" />
         </a>
       </div>
@@ -66,7 +90,7 @@
               <h6 class="title-report borders p-2"><strong>HISTORI</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href="historiPengerjaan.php">
+                <a href=".php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Histori Pengerjaan</h6>
@@ -92,9 +116,6 @@
                 </a>
               </ul>
             </div>
-            <a href="../logout/logout.php" class="text-danger">
-              <h6 class="title-report borders p-2"><strong>LOGOUT</strong></h6>
-            </a>
           </div>
         </div>
         <!-- Data-Table -->
@@ -103,58 +124,41 @@
           <div>
             <div class="tab borders d-flex align-items-center p-3">
               <i class="fa fa-search ms-3"></i>
-              <h4 class="borders ms-3 mt-2"><strong>Data Karyawan</strong></h4>
+              <h4 class="borders ms-3 mt-2"><strong>Detail Akun Karyawan</strong></h4>
             </div>
           </div>
           <!-- Tab Menu -->
-          <div class="container-fluid tab-menu">
-            <div class="row border">
-              <div class="col-4 border d-flex justify-content-start align-items-center">
-                <div class="tab-icon me-2 d-flex justify-content-center align-items-center">
-                  <i class="y fa-regular fa-clipboard"></i>
-                </div>
-                <div class="tab-box-title ms-2">
-                  <h6 class="tab-title"><strong>Total Karyawan</strong></h6>
-                  <h6 class="tab-number"><?php echo mysqli_num_rows($sql_query); ?></h6>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="tabless mt-4 ps-4 pe-4 pb-4">
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Nama Karyawan</th>
-                  <th scope="col">Username</th>
-                  <th scope="col">Tanggal Bergabung</th>
-                  <th scope="col">Opsi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <?php
-                  $i = 1;
-                  while($rows = mysqli_fetch_assoc($sql_query))
-                  {
-                ?>
-                <tr>
-                  <th scope="row"><?php echo $i; ?></th>
-                  <td><?php echo $rows["employee_name"]; ?></td>
-                  <td><?php echo $rows["employee_username"]; ?></td>
-                  <td><?php echo $rows["employee_date_of_join"]; ?></td>
-                  <td>
-                    <div>
-                      <a class="btn btn-primary" href="detailKaryawan.php?id=<?php echo $rows['employee_id']; ?>"><img src="" alt="" /><i class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
-                      <a class="btn btn-danger" href="hapusKaryawan.php?id=<?php echo $rows['employee_id']; ?>"><img src="" alt="" /><i class="fa-solid fa-trash me-2"></i>Hapus</a>
-                    </div>
-                  </td>
-                </tr>
-                <?php 
-                  $i++;
-                  } 
-                ?>
-              </tbody>
-            </table>
+            <form action="" method="post">
+            <?php while($fetch = mysqli_fetch_assoc($query))
+            {
+            ?>
+            <div class="mb-3">
+                <input type="hidden" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Masukkan Username Karyawan" autocomplete="off" name="id" required value="<?php echo $fetch['employee_id']; ?>"/>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Masukkan Username Karyawan" autocomplete="off" name="username" required value="<?php echo $fetch['employee_username']; ?>"/>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputNama" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="exampleInputNama" aria-describedby="emailHelp" placeholder="Masukkan Nama Karyawan" autocomplete="off" name="nama" required value="<?php echo $fetch['employee_name']; ?>"/>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword" aria-describedby="emailHelp" placeholder="Masukkan Password" autocomplete="off" name="password" required value="<?php echo $fetch['employee_password']; ?>"/>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputTanggal" class="form-label">Tanggal</label>
+                <input type="date" class="form-control" id="exampleInputTanggal" aria-describedby="emailHelp" placeholder="Masukkan" autocomplete="off" name="tanggal" value="<?php echo $fetch['employee_date_of_join']; ?>" required />
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary" name="submit">Update</button>
+              </div>
+            <?php
+            }
+            ?>
+            </form>
           </div>
         </div>
       </div>

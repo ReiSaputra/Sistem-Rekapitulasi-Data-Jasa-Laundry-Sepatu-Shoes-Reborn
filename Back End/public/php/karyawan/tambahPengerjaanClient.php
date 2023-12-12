@@ -1,3 +1,16 @@
+<?php
+  session_start();
+
+  require_once __DIR__ . "/../../../model/connection.php";
+
+  // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
+  if(!isset($_SESSION["username"]))
+  {
+    // Jika Benar salah
+    header("Location: ../login/loginEmployee.php");
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,7 +38,7 @@
         <div class="menu col-3 borders shadow">
           <!-- Profile -->
           <div class="profile p-3">
-            <h6 class="borders p-2 mb-0"><a href="cekData.html">Muhammad Fathurraihan Saputra</a></h6>
+            <h6 class="borders p-2 mb-0"><a href="cekData.html"><?php echo $_SESSION["usernameEmp"]; ?></a></h6>
             <h6 class="borders mb-0 p-2">Karyawan</h6>
           </div>
           <!-- Board -->
@@ -74,22 +87,22 @@
             </div>
           </div>
           <div class="div-forms p-5">
-            <form method="post">
+            <form action="tambahPengerjaanProduksi.php" method="post">
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nama</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Client" autocomplete="off" name="" />
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Client" autocomplete="off" name="nama" />
               </div>
               <div class="mb-3">
                 <label for="exampleInputWA" class="form-label">No WA</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nomor WhatsApp" autocomplete="off" name="" />
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nomor WhatsApp" autocomplete="off" name="wa" />
               </div>
               <div class="mb-3">
                 <div class="form-floating">
-                  <textarea class="form-control" placeholder="Nama Alamat" id="floatingTextarea"></textarea>
+                  <textarea class="form-control" placeholder="Nama Alamat" id="floatingTextarea" name="alamat"></textarea>
                   <label for="floatingTextarea">Alamat</label>
                 </div>
               </div>
-              <button type="submit" class="btn btn-primary" name="">Tambah</button>
+              <button type="submit" class="btn btn-primary" name="submit">Tambah</button>
             </form>
           </div>
         </div>

@@ -62,7 +62,7 @@
               <h6 class="title-report borders p-2"><strong>HISTORI</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href="historiOwner.php">
+                <a href="historiPengerjaan.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Histori Pengerjaan</h6>
@@ -88,6 +88,9 @@
                 </a>
               </ul>
             </div>
+            <a href="../logout/logout.php" class="text-danger">
+              <h6 class="title-report borders p-2"><strong>LOGOUT</strong></h6>
+            </a>
           </div>
         </div>
         <!-- Data-Table -->

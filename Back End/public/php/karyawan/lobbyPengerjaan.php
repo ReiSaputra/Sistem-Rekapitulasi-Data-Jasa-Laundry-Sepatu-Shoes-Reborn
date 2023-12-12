@@ -1,3 +1,28 @@
+<?php
+  session_start();
+
+  require_once __DIR__ . "/../../../model/connection.php";
+
+  // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
+  if(!isset($_SESSION["usernameEmp"]))
+  {
+    // Jika Benar salah
+    header("Location: ../login/loginEmployee.php");
+  }
+
+  $sql = "SELECT p.*, c.*, e.*, t.* FROM production_detail AS p
+          INNER JOIN client AS c ON p.production_id_employee = c.client_id
+          INNER JOIN employee AS e ON p.production_id_client = e.employee_id
+          INNER JOIN treatment_detail AS t ON p.production_id_treatment_dtl = t.treatment_id";
+
+  $query = mysqli_query(mySqlConnection(), $sql);
+
+  while($row = mysqli_fetch_assoc($query))
+  {
+    var_dump($row);
+  }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,7 +50,7 @@
         <div class="menu col-3 borders shadow">
           <!-- Profile -->
           <div class="profile p-3">
-            <h6 class="borders p-2 mb-0"><a href="cekData.html">Muhammad Fathurraihan Saputra</a></h6>
+            <h6 class="borders p-2 mb-0"><a href="cekData.html"><?php echo $_SESSION["usernameEmp"]; ?></a></h6>
             <h6 class="borders mb-0 p-2">Karyawan</h6>
           </div>
           <!-- Board -->
