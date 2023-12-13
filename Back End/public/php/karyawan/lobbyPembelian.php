@@ -1,4 +1,16 @@
 <?php
+
+// Hubungkan ke database
+require_once __DIR__ . "/../../../model/connection.php";
+
+// Fungsi untuk mendapatkan data pembelian dari database
+function getDataPembelian() {
+    mySqlConnection();
+    $result = mysqli_query(mySqlConnection(), "SELECT * FROM purchasing_item");
+
+    return $result;
+}
+
   session_start();
 
   require_once __DIR__ . "/../../../model/connection.php";
@@ -43,7 +55,6 @@
           </div>
           <!-- Board -->
           <div class="board borders p-3">
-            <!-- Dashboard -->
             <!-- Dashboard -->
             <div class="dashboard borders">
               <h6 class="title-dashboard borders p-2"><strong>DASHBOARD</strong></h6>
@@ -119,6 +130,7 @@
               </div>
             </div>
           </div>
+          <!-- Tabel Pembelian -->
           <div class="tabless mt-4 ps-4 pe-4 pb-4">
             <div class="insert-menu borders d-flex justify-content-end mb-3">
               <a class="btn ps-5 pe-5 btn-outline-dark" href="tambahPembelian.php"> <img src="" alt="" />Tambah Pembelian</a>
@@ -129,26 +141,40 @@
                   <th scope="col">No</th>
                   <th scope="col">Nama Barang</th>
                   <th scope="col">Tanggal Pembelian</th>
-                  <th scope="col">Pengajuan</th>
+                  <th scope="col">Total</th>
                   <th scope="col">Harga</th>
-                  <th scope="col">Opsi</th>
+                  <th scope="col">Pegawai</th>
+                  <th scope="col">Aksi</th>
                 </tr>
               </thead>
               <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Kain Lap</td>
-                  <td>15 November 2023</td>
-                  <td>Adi</td>
-                  <td>Rp. 150.000.00</td>
-                  <td>
-                    <div>
-                      <a class="btn btn-success" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-check me-2"></i>Selesai</a>
-                      <a class="btn btn-primary" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
-                      <a class="btn btn-danger" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-trash me-2"></i>Hapus</a>
-                    </div>
-                  </td>
-                </tr>
+                <?php
+                // Ambil data pembelian dari database
+                $result = getDataPembelian();
+
+                // Perulangan untuk menampilkan data pembelian
+                $counter = 1;
+                while ($row = mysqli_fetch_assoc($result)) {
+                    echo "<tr>";
+                    echo "<th scope='row'>$counter</th>";
+                    echo "<td>{$row['purchase_item_name']}</td>";
+                    echo "<td>{$row['purchase_date']}</td>";
+                    echo "<td>{$row['purchase_total']}</td>";
+                    echo "<td>{$row['purchase_price']}</td>";
+                    echo "<td>{$row['purchase_id_employee']}</td>";
+                    echo "<td>";
+                    echo "<div>";
+                    echo "<a class='btn btn-success' href='detailPembelian.html'><img src='' alt='' /><i class='fa-solid fa-check me-2'></i>Selesai</a>";
+                    echo "<a class='btn btn-primary' href='detailPembelian.html'><img src='' alt='' /><i class='fa-solid fa-magnifying-glass me-2'></i>Detail</a>";
+                    echo "<a class='btn btn-danger' href='detailPembelian.html'><img src='' alt='' /><i class='fa-solid fa-trash me-2'></i>Hapus</a>";
+                    echo "</div>";
+                    echo "</td>";
+                    echo "</tr>";
+
+                    // Tingkatkan counter
+                    $counter++;
+                }
+                ?>
               </tbody>
             </table>
           </div>
