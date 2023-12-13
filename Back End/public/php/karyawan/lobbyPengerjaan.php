@@ -37,7 +37,7 @@
   <body>
     <nav class="navbar p-3 shadow">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="lobbyPengerjaan.php">
           <img src="../../../assets/img/JPG/LOGO-W-300x300.png" alt="Shoes Reborn" width="40" height="40" />
         </a>
       </div>
