@@ -1,3 +1,39 @@
+<?php
+// Hubungkan ke database
+require_once __DIR__ . "/../../../model/connection.php";
+
+if(isset($_POST["tambah"])){
+
+mySqlConnection();
+
+$nama_barang = $_POST['purchase_item_name'];
+$tanggal = $_POST['purchase_date'];
+$total = $_POST['purchase_total'];
+$harga = $_POST['purchase_price'];
+
+
+// Query untuk menyimpan data ke dalam database
+$sql = "INSERT INTO purchasing_item (purchase_item_name, purchase_date, purchase_total, purchase_price) VALUES ('$nama_barang', '$tanggal', $total, $harga)";
+
+$query = mysqli_query(mySqlConnection(), $sql);
+
+
+// if ($conn->query($sql) === TRUE) {
+  // echo "Tambah pembelian berhasil ditambahkan.";
+  // Lakukan commit transaksi
+  // $conn->commit();
+// } else {
+  // echo "Error: " . $sql . "<br>" . $conn->error;
+  // Rollback transaksi jika terjadi kesalahan
+  // $conn->rollback();
+// }
+
+
+// Tutup koneksi
+// $conn->close();
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -25,7 +61,7 @@
         <div class="menu col-3 borders shadow">
           <!-- Profile -->
           <div class="profile p-3">
-            <h6 class="borders p-2 mb-0"><a href="cekData.html">Muhammad Fathurraihan Saputra</a></h6>
+            <h6 class="borders p-2 mb-0"><a href="cekData.php">Muhammad Fathurraihan Saputra</a></h6>
             <h6 class="borders mb-0 p-2">Karyawan</h6>
           </div>
           <!-- Board -->
@@ -35,13 +71,13 @@
               <h6 class="title-dashboard borders p-2"><strong>DASHBOARD</strong></h6>
               <!-- Dashboard-Child -->
               <ul class="dashboard-child borders ps-4">
-                <a href="lobbyPengerjaan.html">
+                <a href="lobbyPengerjaan.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Data Pengerjaan</h6>
                   </li>
                 </a>
-                <a href="lobbyPembelian.html">
+                <a href="lobbyPembelian.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Data Pembelian</h6>
@@ -54,7 +90,7 @@
               <h6 class="title-report borders p-2"><strong>LAPORAN</strong></h6>
               <!-- Report-Child -->
               <ul class="report-child borders ps-4">
-                <a href="">
+                <a href="lobbyLaporan.php">
                   <li class="list borders d-flex p-2">
                     <img src="" alt="" />
                     <h6>Buat Laporan</h6>
@@ -74,28 +110,28 @@
             </div>
           </div>
           <div class="div-forms p-5">
-            <form method="post">
+          <form action="" method="post">
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Nama Barang</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Barang" autocomplete="off" name="" />
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Masukkan Nama Barang" autocomplete="off" name="purchase_item_name" />
               </div>
               <div class="mb-3">
                 <label for="exampleInputDate" class="form-label">Tanggal</label>
-                <input type="date" class="form-control" id="exampleInputDate" aria-describedby="emailHelp" value="" autocomplete="off" name="" />
+                <input type="date" class="form-control" id="exampleInputDate" aria-describedby="emailHelp" value="" autocomplete="off" name="purchase_date" />
               </div>
               <div class="mb-3">
                 <label for="exampleInputTotal" class="form-label">Total</label>
-                <input type="number" class="form-control" id="exampleInputDate" aria-describedby="emailHelp" value="" autocomplete="off" name="" />
+                <input type="number" class="form-control" id="exampleInputDate" aria-describedby="emailHelp" value="" autocomplete="off" name="purchase_total" />
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Harga</label>
-                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="" autocomplete="off" name=""/>
+                <input type="number" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="" autocomplete="off" name="purchase_price"/>
               </div>
               <div class="mb-3">
                 <label for="exampleInputEmail1" class="form-label">Pegawai</label>
-                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="" autocomplete="off" disabled name="" />
+                <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" value="" autocomplete="off" disabled name="purchase_id_employee" />
               </div>
-              <button type="submit" class="btn btn-primary" name="">Tambah</button>
+              <button type="submit" class="btn btn-primary" name="tambah">Tambah</button>
             </form>
           </div>
         </div>
