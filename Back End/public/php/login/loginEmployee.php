@@ -1,4 +1,6 @@
 <?php
+  session_start();
+  error_reporting(0);
   require_once __DIR__ . "/../../../model/connection.php";
 
   if(isset($_POST["submit"]))
@@ -12,21 +14,14 @@
 
     $queryCheckUsnEmp = mysqli_query(mySqlConnection(), $checkLogEmp);
 
-    
-    if(mysqli_num_rows($queryCheckUsnEmp) > 0)
-    {
-      $fetch = mysqli_fetch_assoc($queryCheckUsnEmp);
-      $UserVerif = $fetch["employee_username"];
-      $passVerif = $fetch["employee_password"];
+    $fetch = mysqli_fetch_assoc($queryCheckUsnEmp);
+    $userVerif = $fetch["employee_username"];
+    $passVerif = $fetch["employee_password"];
 
-      if(password_verify($passEmp, $passVerif))
-      {
-        echo "selamat datang";
-      }
-      else
-      {
-        $error = true;
-      }
+    if($userVerif == $usnEmp && $passVerif == $passEmp)
+    {
+      $_SESSION["usernameEmp"] = $userVerif;
+      header("Location: ../karyawan/lobbyPengerjaan.php");
     }
     else
     {

@@ -1,16 +1,50 @@
 <?php
-  // Lakukan session
   session_start();
 
   require_once __DIR__ . "/../../../model/connection.php";
 
-  // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
   if(!isset($_SESSION["username"]))
   {
-    // Jika Benar salah
-    header("Location: ../login/loginOwner.php");
+  // Jika Benar salah
+  header("Location: ../login/loginOwner.php");
+  }
+
+  // Jika tombol sumit ditekan
+  if(isset($_POST["submit"]))
+  {
+    $empName = $_POST["nama"]; // URL nama
+    $empUsername = $_POST["username"]; // URL Username 
+    $empPassword = $_POST["password"]; // URL Password
+    $empDate = $_POST["tanggal"]; // URL tanggal
+  
+    $newDate = date('Y-m-d', strtotime($empDate));
+
+    // Melihat terlebih dahulu tabel username
+    $sqlSelect = "SELECT * FROM employee WHERE employee_username = '$empUsername'";
+
+    // Masukkan kueri
+    $querySelect = mysqli_query(mySqlConnection(), $sqlSelect);
+
+    // var_dump(mysqli_num_rows($querySelect));
+    
+    // Jika username untuk username lebih dari 0
+    if(mysqli_num_rows($querySelect) > 0)
+    {
+      $error = true;
+    }
+    else
+    {
+      // Masukkan data
+      $sqlInsert = "INSERT INTO employee (employee_name, employee_username, employee_password, employee_date_of_join) VALUES ('$empName', '$empUsername', '$empPassword', '$newDate')";
+
+      // Jalankan
+      $querySelect = mysqli_query(mySqlConnection(), $sqlInsert);
+
+      header("Location: dataKaryawan.php");
+    }
   }
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,7 +60,7 @@
   <body>
     <nav class="navbar p-3 shadow">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="">
           <img src="../../../assets/img/JPG/LOGO-W-300x300.png" alt="Shoes Reborn" width="40" height="40" />
         </a>
       </div>
@@ -99,73 +133,40 @@
           <div>
             <div class="tab borders d-flex align-items-center p-3">
               <i class="fa fa-search ms-3"></i>
-              <h4 class="borders ms-3 mt-2"><strong>Dashboard</strong></h4>
+              <h4 class="borders ms-3 mt-2"><strong>Buat Akun Karyawan</strong></h4>
             </div>
           </div>
           <!-- Tab Menu -->
-          <div class="container-fluid tab-menu">
-            <div class="row border">
-              <div class="col-4 border d-flex justify-content-start align-items-center">
-                <div class="tab-icon me-2 d-flex justify-content-center align-items-center">
-                  <i class="y fa-regular fa-clipboard"></i>
-                </div>
-                <div class="tab-box-title ms-2">
-                  <h6 class="tab-title"><strong>Total Pembelian</strong></h6>
-                  <h6 class="tab-number">5</h6>
-                </div>
-              </div>
-              <div class="col-4 border d-flex justify-content-start align-items-center">
-                <div class="tab-icon me-2 d-flex justify-content-center align-items-center">
-                  <i class="r fa-solid fa-timeline"></i>
-                </div>
-                <div class="tab-box-title ms-2">
-                  <h6 class="tab-title"><strong>Total Harga</strong></h6>
-                  <h6 class="tab-number">5</h6>
-                </div>
-              </div>
-              <div class="col-4 border d-flex justify-content-start align-items-center">
-                <div class="tab-icon me-2 d-flex justify-content-center align-items-center">
-                  <i class="g fa-solid fa-check"></i>
-                </div>
-                <div class="tab-box-title ms-2">
-                  <h6 class="tab-title"><strong>Jumlah Harga</strong></h6>
-                  <h6 class="tab-number">5</h6>
-                </div>
-              </div>
-            </div>
-          </div>
           <div class="tabless mt-4 ps-4 pe-4 pb-4">
-            <div class="insert-menu borders d-flex justify-content-end mb-3">
-              <a class="btn ps-5 pe-5 btn-outline-dark" href="tambahPembelian.php"> <img src="" alt="" />Tambah Pembelian</a>
-            </div>
-            <table class="table">
-              <thead>
-                <tr>
-                  <th scope="col">No</th>
-                  <th scope="col">Nama Barang</th>
-                  <th scope="col">Tanggal Pembelian</th>
-                  <th scope="col">Pengajuan</th>
-                  <th scope="col">Harga</th>
-                  <th scope="col">Opsi</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <th scope="row">1</th>
-                  <td>Kain Lap</td>
-                  <td>15 November 2023</td>
-                  <td>Adi</td>
-                  <td>Rp. 150.000.00</td>
-                  <td>
-                    <div>
-                      <a class="btn btn-success" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-check me-2"></i>Selesai</a>
-                      <a class="btn btn-primary" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
-                      <a class="btn btn-danger" href="detailPembelian.html"><img src="" alt="" /><i class="fa-solid fa-trash me-2"></i>Hapus</a>
-                    </div>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+            <form action="" method="post">
+              <div class="mb-3">
+                <label for="exampleInputUsername" class="form-label">Username</label>
+                <input type="text" class="form-control" id="exampleInputUsername" aria-describedby="emailHelp" placeholder="Masukkan Username Karyawan" autocomplete="off" name="username" required />
+                <?php
+                  if(isset($error))
+                  {
+                ?>
+                <p style="color: red;">Username sudah digunakan, silahkan pilih yang lain.</p>
+                <?php  
+                  }
+                ?>
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputNama" class="form-label">Nama</label>
+                <input type="text" class="form-control" id="exampleInputNama" aria-describedby="emailHelp" placeholder="Masukkan Nama Karyawan" autocomplete="off" name="nama" required />
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputPassword" class="form-label">Password</label>
+                <input type="password" class="form-control" id="exampleInputPassword" aria-describedby="emailHelp" placeholder="Masukkan Password" autocomplete="off" name="password" required />
+              </div>
+              <div class="mb-3">
+                <label for="exampleInputTanggal" class="form-label">Tanggal</label>
+                <input type="date" class="form-control" id="exampleInputTanggal" aria-describedby="emailHelp" placeholder="Masukkan" autocomplete="off" name="tanggal" value="<?php echo date("Y-m-d") ?>" required />
+              </div>
+              <div class="mb-3">
+                <button type="submit" class="btn btn-primary" name="submit">Tambah</button>
+              </div>
+            </form>
           </div>
         </div>
       </div>

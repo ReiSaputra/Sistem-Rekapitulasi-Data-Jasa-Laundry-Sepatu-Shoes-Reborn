@@ -62,6 +62,7 @@ $query = mysqli_query(mySqlConnection(), $sql);
           <!-- Profile -->
           <div class="profile p-3">
             <h6 class="borders p-2 mb-0"><a href="cekData.php">Muhammad Fathurraihan Saputra</a></h6>
+            <h6 class="borders p-2 mb-0"><a href="cekData.html"><?php echo $_SESSION["usernameEmp"]; ?></a></h6>
             <h6 class="borders mb-0 p-2">Karyawan</h6>
           </div>
           <!-- Board -->

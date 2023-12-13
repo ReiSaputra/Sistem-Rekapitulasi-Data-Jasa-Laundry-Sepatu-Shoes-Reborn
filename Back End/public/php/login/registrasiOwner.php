@@ -1,25 +1,38 @@
 <?php
   require_once __DIR__ . "/../../../model/connection.php";
 
+  // Jika  url dari submit sudah di set
   if(isset($_POST["createAccountOwner"]))
   {
+    // Mendapatkan koneksi dari database
     mySqlConnection();
 
+    // Menyimpan input owner, password, dan username dan disimpan ke dalam variabel
     $usernameOwn = $_POST["usn"];
-    $nameOwn = $_POST["name"];
+    $nameOwn = $_POST["name"];;
     $passwordOwn = $_POST["pass"];
 
+    // Jadikan password hash
     $passwordOwnHash = password_hash($passwordOwn, PASSWORD_DEFAULT);
 
+    // Select untuk mencari owner_username dengan input dari user
     $sqlInsert = "SELECT owner_username FROM owner WHERE owner_username = '$usernameOwn'";
+
+    // Melakukan query
     $queryCheckOwn = mysqli_query(mySqlConnection(), $sqlInsert);
 
+    // Jika seleksinya terdapat username yang sama (1 berarti sudah ada)
     if(mysqli_num_rows($queryCheckOwn) > 0)
     {
+      // Aktifkan error menjadi true
+      // Gagal
       $errorCheckOwn = true;
     } else 
     {
+      // Insert data ke dalam tabel owner
+      // Berhasil
       mysqli_query(mySqlConnection(), "INSERT INTO owner (owner_name, owner_username, owner_password) VALUES ('$nameOwn', '$usernameOwn', '$passwordOwnHash')");
+      // Pindahkan user ke halaman loginOwner.php
       header("Location: loginOwner.php");
     }
 

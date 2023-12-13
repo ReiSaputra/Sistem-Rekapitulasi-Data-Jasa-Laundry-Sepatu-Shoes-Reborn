@@ -1,4 +1,6 @@
 <?php
+  session_start();
+
   require_once __DIR__ . "/../../../model/connection.php";
 
   if(isset($_POST["submit"]))
@@ -8,28 +10,40 @@
     $usnOwn = $_POST["usn"];
     $passOwn = $_POST["pass"];
 
-    $checkLogOwn = "SELECT owner_username, owner_password FROM owner WHERE owner_username = '$usnOwn'";
+    // Menyeleksi Username Owner yang telah diinputkan oleh user
+    $checkLogOwn = "SELECT owner_id, owner_username, owner_password FROM owner WHERE owner_username = '$usnOwn'";
 
+    // Melakukan Query
     $queryCheckUsnOwn = mysqli_query(mySqlConnection(), $checkLogOwn);
 
-    
+    // Cek jika terdapat Username Owner dan Password lebih dari 1 (berarti ada)
     if(mysqli_num_rows($queryCheckUsnOwn) > 0)
     {
+      // Fetching data
       $fetch = mysqli_fetch_assoc($queryCheckUsnOwn);
+      // Id
+      $idVerif = $fetch["owner_id"];
+      // Owner 
       $ownerVerif = $fetch["owner_username"];
+      // Password hash
       $passVerif = $fetch["owner_password"];
 
+      // Cek jika password hash sama dengan password yang telah diinputkan oleh user
       if(password_verify($passOwn, $passVerif))
       {
-        echo "selamat datang";
+        // Jika benar halaman dipindahkan ke owner sekalian membawa
+        $_SESSION["username"] = $ownerVerif;
+        header("Location: ../owner/LobbyOwner.php?");
       }
       else
       {
+        // Jika salah akan menset error menjadi true
         $error = true;
       }
     }
     else
     {
+      // Jika salah akan menset error menjadi true
       $error = true;
     }
   }
