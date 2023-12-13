@@ -45,7 +45,7 @@
     <!-- Navbar -->
     <nav class="navbar p-3">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="choose.php">
           <img src="../../../assets/img/JPG/LOGO-B-300x300.png" alt="Shoes Reborn" width="40" height="40" />
         </a>
       </div>

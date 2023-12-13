@@ -20,7 +20,7 @@
     $sql = "INSERT INTO client (client_name, client_address, client_telephone_num) VALUES
             ('$nama', '$alamat', '$wa')";
 
-    // mysqli_begin_transaction(mySqlConnection());
+    mysqli_begin_transaction(mySqlConnection());
 
     // $query = mysqli_query(mySqlConnection(), $sql);
 
