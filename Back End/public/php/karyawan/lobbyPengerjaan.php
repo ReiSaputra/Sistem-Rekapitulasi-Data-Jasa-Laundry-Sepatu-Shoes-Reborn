@@ -1,5 +1,6 @@
 <?php
   session_start();
+  error_reporting(0);
 
   require_once __DIR__ . "/../../../model/connection.php";
 
@@ -11,15 +12,17 @@
   }
 
   $sql = "SELECT p.*, c.*, e.*, t.* FROM production_detail AS p
-          INNER JOIN client AS c ON p.production_id_employee = c.client_id
-          INNER JOIN employee AS e ON p.production_id_client = e.employee_id
-          INNER JOIN treatment_detail AS t ON p.production_id_treatment_dtl = t.treatment_id";
+          INNER JOIN client AS c ON p.production_id_client = c.client_id
+          INNER JOIN employee AS e ON p.production_id_employee = e.employee_id
+          INNER JOIN treatment_detail AS t ON p.production_id_treatment_dtl = t.treatment_id
+          WHERE e.employee_username = '{$_SESSION['usernameEmp']}'";
 
   $query = mysqli_query(mySqlConnection(), $sql);
 
-  while($row = mysqli_fetch_assoc($query))
+  while ($row = mysqli_fetch_assoc($query))
   {
-    var_dump($row);
+    $item[] = $row;
+    // var_dump($item);
   }
 ?>
 
@@ -87,6 +90,9 @@
                 </a>
               </ul>
             </div>
+            <a href="../logout/logout2.php" class="text-danger">
+              <h6 class="title-report borders p-2"><strong>LOGOUT</strong></h6>
+            </a>
           </div>
         </div>
         <!-- Data-Table -->
@@ -146,12 +152,14 @@
                 </tr>
               </thead>
               <tbody>
+                <?php $i = 1; ?>
+                <?php foreach($item as $rowItem) { ?>
                 <tr>
-                  <th scope="row">1</th>
-                  <td>Kuzatura 2002</td>
-                  <td>Ahmad Dani</td>
-                  <td>Deep Cleaning</td>
-                  <td>29 Desember 2004</td>
+                  <th scope="row"><?php echo $i; ?></th>
+                  <td><?php echo $rowItem["production_nama"]; ?></td>
+                  <td><?php echo $rowItem["client_name"]; ?></td>
+                  <td><?php echo $rowItem["treatment_name"]; ?></td>
+                  <td><?php echo $rowItem["production_deadline"]; ?></td>
                   <td>
                     <div>
                       <a class="btn btn-success" href="donePengerjaan.html"><img src="" alt="" /><i class="fa-solid fa-check me-2"></i>Selesai</a>
@@ -160,6 +168,8 @@
                     </div>
                   </td>
                 </tr>
+                <?php $i++; ?>
+                <?php } ?>
               </tbody>
             </table>
           </div>

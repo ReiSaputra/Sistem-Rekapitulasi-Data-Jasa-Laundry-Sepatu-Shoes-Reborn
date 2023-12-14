@@ -4,7 +4,7 @@
   require_once __DIR__ . "/../../../model/connection.php";
 
   // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
-  if(!isset($_SESSION["username"]))
+  if(!isset($_SESSION["usernameEmp"]))
   {
     // Jika Benar salah
     header("Location: ../login/loginEmployee.php");

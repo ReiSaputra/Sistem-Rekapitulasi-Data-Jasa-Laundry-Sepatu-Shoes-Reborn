@@ -1,3 +1,3 @@
 <?php
-    require_once __DIR__ . "/Back End/public/php/login/choose.php";
+    header("Location: back end/public/php/login/choose.php");
 ?>

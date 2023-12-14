@@ -7,6 +7,7 @@
   {
   // Jika Benar salah
   header("Location: ../login/loginOwner.php");
+  exit();
   }
 
   // Jika tombol sumit ditekan

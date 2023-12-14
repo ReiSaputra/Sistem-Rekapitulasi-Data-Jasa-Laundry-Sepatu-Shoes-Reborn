@@ -8,6 +8,7 @@
     {
         // Jika Benar salah
         header("Location: ../login/loginOwner.php");
+        exit();
     }
 
     if(isset($_GET["id"]))

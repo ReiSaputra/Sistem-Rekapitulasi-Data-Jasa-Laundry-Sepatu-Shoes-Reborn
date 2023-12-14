@@ -1,7 +1,15 @@
 <?php
+session_start();
 
 // Hubungkan ke database
 require_once __DIR__ . "/../../../model/connection.php";
+
+// Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
+if(!isset($_SESSION["usernameEmp"]))
+{
+  // Jika Benar salah
+  header("Location: ../login/loginEmployee.php");
+}
 
 // Fungsi untuk mendapatkan data pembelian dari database
 function getDataPembelian() {
@@ -11,16 +19,6 @@ function getDataPembelian() {
     return $result;
 }
 
-  session_start();
-
-  require_once __DIR__ . "/../../../model/connection.php";
-
-  // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
-  if(!isset($_SESSION["usernameEmp"]))
-  {
-    // Jika Benar salah
-    header("Location: ../login/loginEmployee.php");
-  }
 ?>
 
 <!DOCTYPE html>

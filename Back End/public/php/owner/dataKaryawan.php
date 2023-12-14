@@ -9,6 +9,7 @@
   {
     // Jika Benar salah
     header("Location: ../login/loginOwner.php");
+    exit();
   }
 
   $sql = "SELECT * FROM employee";
