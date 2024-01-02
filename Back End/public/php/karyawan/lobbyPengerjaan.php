@@ -16,7 +16,7 @@ $sql = "SELECT p.*, c.*, e.*, t.* FROM production_detail AS p
           INNER JOIN client AS c ON p.production_id_client = c.client_id
           INNER JOIN employee AS e ON p.production_id_employee = e.employee_id
           INNER JOIN treatment_detail AS t ON p.production_id_treatment_dtl = t.treatment_id
-          WHERE e.employee_username = '{$_SESSION['usernameEmp']}' AND p.production_begin = '$nowDate' AND p.production_begin = '$nowDate' AND p.production_status = 'Proses'";
+          WHERE e.employee_username = '{$_SESSION['usernameEmp']}' AND p.production_begin = '$nowDate' ORDER BY p.production_nama ASC";
 
 $query = mysqli_query(mySqlConnection(), $sql);
 
@@ -24,6 +24,47 @@ while ($row = mysqli_fetch_assoc($query)) {
   $item[] = $row;
   // var_dump($item);
 }
+
+$sqlAssignment = "SELECT COUNT(production_status) FROM production_detail WHERE production_begin = '$nowDate'";
+
+$sqlAssignmentQuery = mysqli_query(mySqlConnection(), $sqlAssignment);
+$numberData0 = mysqli_fetch_assoc($sqlAssignmentQuery);
+
+$sqlProccess = "SELECT COUNT(production_status) FROM production_detail WHERE production_status = 'Proses' AND production_begin = '$nowDate'";
+
+$sqlProccessQuery = mysqli_query(mySqlConnection(), $sqlProccess);
+$numberData1 = mysqli_fetch_assoc($sqlProccessQuery);
+
+$sqlDone = "SELECT COUNT(production_status) FROM production_detail WHERE production_status = 'Selesai' AND production_begin = '$nowDate'";
+
+$sqlDoneQuery = mysqli_query(mySqlConnection(), $sqlDone);
+$numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
+
+// Mekanisme Deadline
+$dateString = date("Y-m-d");
+$timestamp = strtotime($nowDate);
+$integerDate = (int) $timestamp;
+
+// echo $integerDate . "<br />";
+
+$sqlDeadlineChanger = "SELECT production_deadline FROM production_detail";
+
+$queryDeadline = mysqli_query(mySqlConnection(), $sqlDeadlineChanger);
+
+while ($fetch = mysqli_fetch_assoc($queryDeadline)) {
+  foreach ($fetch as $row) {
+    $dateIntoTime = strtotime($row);
+    $timeIntoInt = (int) $dateIntoTime;
+  }
+}
+
+if ($integerDate > $timeIntoInt) {
+  $sqlDeadlineChanging = "UPDATE production_detail
+                          SET production_status = 'Tidak Selesai' WHERE production_status = 'Proses'";
+
+  $queryChanger = mysqli_query(mySqlConnection(), $sqlDeadlineChanging);
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -78,12 +119,6 @@ while ($row = mysqli_fetch_assoc($query)) {
                   <h6>Data Pengerjaan</h6>
                 </li>
               </a>
-              <a href="lobbyPembelian.php">
-                <li class="list borders d-flex p-2">
-                  <img src="" alt="" />
-                  <h6>Data Pembelian</h6>
-                </li>
-              </a>
             </ul>
           </div>
           <!-- Report -->
@@ -122,7 +157,13 @@ while ($row = mysqli_fetch_assoc($query)) {
               </div>
               <div class="tab-box-title ms-2">
                 <h6 class="tab-title"><strong>Data Pengerjaan Hari Ini</strong></h6>
-                <h6 class="tab-number">5</h6>
+                <h6 class="tab-number">
+                  <?php
+                  foreach ($numberData0 as $dataProses0) {
+                    echo $dataProses0;
+                  }
+                  ?>
+                </h6>
               </div>
             </div>
             <div class="col-4 border d-flex justify-content-start align-items-center">
@@ -131,7 +172,13 @@ while ($row = mysqli_fetch_assoc($query)) {
               </div>
               <div class="tab-box-title ms-2">
                 <h6 class="tab-title"><strong>Sedang Berjalan</strong></h6>
-                <h6 class="tab-number">5</h6>
+                <h6 class="tab-number">
+                  <?php
+                  foreach ($numberData1 as $dataProses1) {
+                    echo $dataProses1;
+                  }
+                  ?>
+                </h6>
               </div>
             </div>
             <div class="col-4 border d-flex justify-content-start align-items-center">
@@ -140,7 +187,13 @@ while ($row = mysqli_fetch_assoc($query)) {
               </div>
               <div class="tab-box-title ms-2">
                 <h6 class="tab-title"><strong>Selesai</strong></h6>
-                <h6 class="tab-number">5</h6>
+                <h6 class="tab-number">
+                  <?php
+                  foreach ($numberData2 as $dataProses2) {
+                    echo $dataProses2;
+                  }
+                  ?>
+                </h6>
               </div>
             </div>
           </div>
@@ -178,7 +231,11 @@ while ($row = mysqli_fetch_assoc($query)) {
                   <td>
                     <?php echo $rowItem["treatment_name"]; ?>
                   </td>
-                  <td style="color: #edc511;">
+                  <?php if ($rowItem["production_status"] == "Proses") { ?>
+                    <td style="color: #edc511;">
+                    <?php } else if ($rowItem["production_status"] == "Selesai") { ?>
+                      <td style="color: #198754;">
+                    <?php } ?>
                     <?php echo $rowItem["production_status"]; ?>
                   </td>
                   <td>
@@ -186,13 +243,17 @@ while ($row = mysqli_fetch_assoc($query)) {
                   </td>
                   <td>
                     <div>
-                      <a class="btn btn-success"
-                        href="donePengerjaan.php?id=<?php echo $rowItem["production_id"]; ?>"><img src="" alt="" /><i
-                          class="fa-solid fa-check me-2"></i>Selesai</a>
-                      <a class="btn btn-primary" href="detailPengerjaan.html"><img src="" alt="" /><i
-                          class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
-                      <a class="btn btn-danger" href="deletePengerjaan.html"><img src="" alt="" /><i
-                          class="fa-solid fa-trash me-2"></i>Hapus</a>
+                      <?php if ($rowItem["production_status"] == "Proses") { ?>
+                        <a class="btn btn-success" href="donePengerjaan.php?id=<?php echo $rowItem["production_id"]; ?>"><i
+                            class="fa-solid fa-check me-2"></i>Selesai</a>
+                        <a class="btn btn-primary"
+                          href="detailPengerjaan.php?id=<?php echo $rowItem["production_id"]; ?>"><i
+                            class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
+                      <?php } else if ($rowItem["production_status"] == "Selesai") { ?>
+                          <a class="btn btn-primary"
+                            href="detailPengerjaanAlt.php?id=<?php echo $rowItem["production_id"]; ?>"><i
+                              class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
+                      <?php } ?>
                     </div>
                   </td>
                 </tr>

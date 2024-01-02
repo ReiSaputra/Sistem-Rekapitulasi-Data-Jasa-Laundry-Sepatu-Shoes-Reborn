@@ -63,12 +63,6 @@ if (!isset($_SESSION["usernameEmp"])) {
                   <h6>Data Pengerjaan</h6>
                 </li>
               </a>
-              <a href="lobbyPembelian.php">
-                <li class="list borders d-flex p-2">
-                  <img src="" alt="" />
-                  <h6>Data Pembelian</h6>
-                </li>
-              </a>
             </ul>
           </div>
           <!-- Report -->
