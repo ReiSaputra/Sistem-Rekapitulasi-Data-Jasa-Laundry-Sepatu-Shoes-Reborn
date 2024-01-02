@@ -111,7 +111,7 @@ if (isset($_POST["submit2"])) {
                         <h6 class="title-report borders p-2"><strong>LAPORAN</strong></h6>
                         <!-- Report-Child -->
                         <ul class="report-child borders ps-4">
-                            <a href="buatLaporan.php">
+                            <a href="cekLaporan.php">
                                 <li class="list borders d-flex p-2">
                                     <img src="" alt="" />
                                     <h6>Buat Laporan</h6>
@@ -127,7 +127,7 @@ if (isset($_POST["submit2"])) {
                 <div>
                     <div class="tab borders d-flex align-items-center p-3">
                         <i class="fa fa-search ms-3"></i>
-                        <h4 class="borders ms-3 mt-2"><strong>Tambah Pengerjaan</strong></h4>
+                        <h4 class="borders ms-3 mt-2"><strong>Detail Pengerjaan</strong></h4>
                     </div>
                 </div>
                 <div class="div-forms p-5">

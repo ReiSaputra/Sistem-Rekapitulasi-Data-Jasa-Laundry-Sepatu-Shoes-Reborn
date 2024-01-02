@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set('Asia/Jakarta');
 
 require_once __DIR__ . "/../../../model/connection.php";
 
@@ -79,31 +80,11 @@ if (isset($_POST["submit2"])) {
     header("Location: lobbyPengerjaan.php");
   } else {
     $commit = false;
-    // echo "Error executing first query: " . mysqli_error(mySqlConnection());
     mysqli_rollback(mySqlConnection());
   }
 } elseif (isset($_POST["submit3"])) {
   mysqli_rollback(mySqlConnection());
 }
-
-// if(isset($_GET["back"]))
-// {
-//   mysqli_rollback(mySqlConnection());
-//   $commit = false;
-//   // echo "Rolback bagus";
-//   // header("Location: lobbyPengerjaan.php");
-//   // exit();
-// }
-
-//   if ($commit) {
-//     // Commit the transaction if the flag is set to true
-//     mysqli_commit(mySqlConnection());
-//     echo "Transaction committed successfully.";
-// } else {
-//     // Rollback the transaction if the flag is set to false
-//     mysqli_rollback(mySqlConnection());
-//     echo "Transaction rolled back.";
-// }
 ?>
 
 <!DOCTYPE html>

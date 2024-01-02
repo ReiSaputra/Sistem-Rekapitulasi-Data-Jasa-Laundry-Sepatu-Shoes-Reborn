@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+date_default_timezone_set('Asia/Jakarta');
 
 require_once __DIR__ . "/../../../model/connection.php";
 
@@ -13,29 +14,34 @@ if (!isset($_SESSION["usernameEmp"])) {
 $nowDate = date('Y-m-d');
 
 $sql = "SELECT p.*, c.*, e.*, t.* FROM production_detail AS p
-          INNER JOIN client AS c ON p.production_id_client = c.client_id
-          INNER JOIN employee AS e ON p.production_id_employee = e.employee_id
-          INNER JOIN treatment_detail AS t ON p.production_id_treatment_dtl = t.treatment_id
-          WHERE e.employee_username = '{$_SESSION['usernameEmp']}' AND p.production_begin = '$nowDate' ORDER BY p.production_nama ASC";
+        INNER JOIN client AS c ON p.production_id_client = c.client_id
+        INNER JOIN employee AS e ON p.production_id_employee = e.employee_id
+        INNER JOIN treatment_detail AS t ON p.production_id_treatment_dtl = t.treatment_id
+        WHERE e.employee_username = '{$_SESSION['usernameEmp']}' AND p.production_begin = '$nowDate' ORDER BY p.production_nama ASC";
 
 $query = mysqli_query(mySqlConnection(), $sql);
 
 while ($row = mysqli_fetch_assoc($query)) {
   $item[] = $row;
-  // var_dump($item);
 }
 
-$sqlAssignment = "SELECT COUNT(production_status) FROM production_detail WHERE production_begin = '$nowDate'";
+$sqlAssignment = "SELECT COUNT(production_status), e.employee_username FROM production_detail AS p
+                  INNER JOIN employee AS e ON p.production_id_employee = e.employee_id
+                  WHERE p.production_begin = '$nowDate' AND e.employee_username = '{$_SESSION['usernameEmp']}'";
 
 $sqlAssignmentQuery = mysqli_query(mySqlConnection(), $sqlAssignment);
 $numberData0 = mysqli_fetch_assoc($sqlAssignmentQuery);
 
-$sqlProccess = "SELECT COUNT(production_status) FROM production_detail WHERE production_status = 'Proses' AND production_begin = '$nowDate'";
+$sqlProccess = "SELECT COUNT(production_status), e.employee_username FROM production_detail AS p
+                INNER JOIN employee AS e ON p.production_id_employee = e.employee_id
+                WHERE p.production_begin = '$nowDate' AND p.production_status = 'Proses' AND e.employee_username = '{$_SESSION['usernameEmp']}'";
 
 $sqlProccessQuery = mysqli_query(mySqlConnection(), $sqlProccess);
 $numberData1 = mysqli_fetch_assoc($sqlProccessQuery);
 
-$sqlDone = "SELECT COUNT(production_status) FROM production_detail WHERE production_status = 'Selesai' AND production_begin = '$nowDate'";
+$sqlDone = "SELECT COUNT(production_status), e.employee_username FROM production_detail AS p
+            INNER JOIN employee AS e ON p.production_id_employee = e.employee_id
+            WHERE p.production_begin = '$nowDate' AND p.production_status = 'Selesai' AND e.employee_username = '{$_SESSION['usernameEmp']}'";
 
 $sqlDoneQuery = mysqli_query(mySqlConnection(), $sqlDone);
 $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
@@ -44,8 +50,6 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
 $dateString = date("Y-m-d");
 $timestamp = strtotime($nowDate);
 $integerDate = (int) $timestamp;
-
-// echo $integerDate . "<br />";
 
 $sqlDeadlineChanger = "SELECT production_deadline FROM production_detail";
 
@@ -58,7 +62,7 @@ while ($fetch = mysqli_fetch_assoc($queryDeadline)) {
   }
 }
 
-if ($integerDate > $timeIntoInt) {
+if ($integerDate >= $timeIntoInt) {
   $sqlDeadlineChanging = "UPDATE production_detail
                           SET production_status = 'Tidak Selesai' WHERE production_status = 'Proses'";
 
@@ -159,9 +163,7 @@ if ($integerDate > $timeIntoInt) {
                 <h6 class="tab-title"><strong>Data Pengerjaan Hari Ini</strong></h6>
                 <h6 class="tab-number">
                   <?php
-                  foreach ($numberData0 as $dataProses0) {
-                    echo $dataProses0;
-                  }
+                  echo $numberData0["COUNT(production_status)"];
                   ?>
                 </h6>
               </div>
@@ -174,9 +176,7 @@ if ($integerDate > $timeIntoInt) {
                 <h6 class="tab-title"><strong>Sedang Berjalan</strong></h6>
                 <h6 class="tab-number">
                   <?php
-                  foreach ($numberData1 as $dataProses1) {
-                    echo $dataProses1;
-                  }
+                  echo $numberData1["COUNT(production_status)"];
                   ?>
                 </h6>
               </div>
@@ -189,9 +189,7 @@ if ($integerDate > $timeIntoInt) {
                 <h6 class="tab-title"><strong>Selesai</strong></h6>
                 <h6 class="tab-number">
                   <?php
-                  foreach ($numberData2 as $dataProses2) {
-                    echo $dataProses2;
-                  }
+                  echo $numberData2["COUNT(production_status)"];
                   ?>
                 </h6>
               </div>
@@ -259,6 +257,7 @@ if ($integerDate > $timeIntoInt) {
                 </tr>
                 <?php $i++; ?>
               <?php } ?>
+
             </tbody>
           </table>
         </div>

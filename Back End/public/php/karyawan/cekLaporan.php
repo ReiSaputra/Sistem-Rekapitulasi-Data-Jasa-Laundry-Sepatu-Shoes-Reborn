@@ -1,8 +1,22 @@
 <?php
 session_start();
-date_default_timezone_set('Asia/Jakarta');
 
 require_once __DIR__ . "/../../../model/connection.php";
+
+if (isset($_GET["id"])) {
+
+    $id = $_GET["id"];
+
+    $sql = "SELECT * FROM report WHERE report_id = '$id'";
+
+    $query = mysqli_query(mySqlConnection(), $sql);
+
+    while ($fetch = mysqli_fetch_assoc($query)) {
+        $row[] = $fetch;
+    }
+
+}
+
 
 $nowDate = date('Y-m-d');
 
@@ -22,20 +36,16 @@ if (!isset($_SESSION["usernameEmp"])) {
 
 if (isset($_POST["submit2"])) {
 
-    $name = $_POST["name"];
-    $date = $_POST["date"];
+    $id = $_POST["id"];
+    $judul = $_POST["judul"];
+    $tanggal = $_POST["date"];
     $detail = $_POST["detail"];
 
-    $employee = $_POST["employee"];
-
-    $sqlEmployee = "SELECT employee_id FROM employee WHERE employee_username = '$employee'";
-    $queryE = mysqli_query(mySqlConnection(), $sqlEmployee);
-
-    $fetch = mysqli_fetch_assoc($queryE);
-    var_dump($fetch);
-
-    $sql = "INSERT INTO report (report_title, report_date, report_detail, report_id_employee)
-            VALUES ('$name', '$date', '$detail', '{$fetch['employee_id']}')";
+    $sql = "UPDATE report
+            SET report_title = '$judul',
+            report_date = '$tanggal',
+            report_detail = '$detail'
+            WHERE report_id = $id";
 
     $query = mysqli_query(mySqlConnection(), $sql);
 
@@ -120,54 +130,45 @@ if (isset($_POST["submit2"])) {
                 <div>
                     <div class="tab borders d-flex align-items-center p-3">
                         <i class="fa fa-search ms-3"></i>
-                        <h4 class="borders ms-3 mt-2"><strong>Tambah Laporan</strong></h4>
+                        <h4 class="borders ms-3 mt-2"><strong>Cek Laporan</strong></h4>
                     </div>
                 </div>
                 <div class="div-forms p-5">
                     <!-- Form -->
                     <form method="post">
                         <div class="mb-3">
-                            <label for="exampleInputLaporan" class="form-label">Judul Laporan</label>
-                            <input type="text" class="form-control" id="exampleInputLaporan"
-                                aria-describedby="emailHelp" placeholder="Masukkan Judul Laporan" autocomplete="off"
-                                name="name" required>
+                            <!-- Item ID -->
+                            <input type="hidden" class="form-control" id="exampleInputEmail1"
+                                aria-describedby="emailHelp" placeholder="Masukkan Nama Sepatu" autocomplete="off"
+                                name="id" value="<?php echo $row[0]["report_id"]; ?>" />
+
+                            <label for="exampleInputEmail1" class="form-label">Nama Judul</label>
+                            <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                placeholder="Masukkan Nama Sepatu" autocomplete="off" name="judul"
+                                value="<?php echo $row[0]["report_title"]; ?>" />
                         </div>
-                        <!-- Hidden -->
-                        <input type="hidden" class="form-control" id="exampleInputDate" aria-describedby="emailHelp"
-                            placeholder="" autocomplete="off" name="date" value="<?php echo date("Y-m-d"); ?>"
-                            required />
-                        <!-- Tampilan -->
                         <div class="mb-3">
-                            <label for="exampleInputDate" class="form-label">Tanggal Laporan</label>
-                            <input type="date" class="form-control" id="exampleInputDate" aria-describedby="emailHelp"
-                                placeholder="" autocomplete="off" name="date" value="<?php echo date("Y-m-d"); ?>"
-                                required disabled />
+                            <label for="exampleInputJenis" class="form-label">Tanggal</label>
+                            <input type="date" class="form-control" id="exampleInputJenis" aria-describedby="emailHelp"
+                                placeholder="Masukkan Nama Sepatu" autocomplete="off" name="date"
+                                value="<?php echo $row[0]["report_date"]; ?>" />
                         </div>
                         <div class="mb-3">
                             <div class="form-floating">
                                 <textarea class="form-control" placeholder="Detail Barang" id="floatingTextarea"
-                                    name="detail"></textarea>
-                                <label for="floatingTextarea">Detail</label>
+                                    name="detail"><?php echo $row[0]["report_detail"]; ?></textarea>
+                                <label for="floatingTextarea">Alamat</label>
                             </div>
                         </div>
-                        <!-- Hidden -->
-                        <div class="mb-3">
-                            <input type="hidden" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" value="<?php echo $_SESSION["usernameEmp"]; ?>"
-                                autocomplete="off" name="employee" required />
-                        </div>
-                        <!-- Tampilan -->
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Pegawai</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
                                 value="<?php echo $_SESSION["usernameEmp"] ?>" autocomplete="off" disabled />
                         </div>
-
-                        <button type="submit" class="btn btn-primary" name="submit2">Kirim</button>
-
+                        <button type="submit" class="btn btn-primary" name="submit2">Update</button>
                     </form>
 
-                    <a href="lobbyLaporan.php" class="btn btn-outline-primary">Kembali</a>
+                    <a href="lobbyPengerjaan.php" class="btn btn-outline-primary">Cancel</a>
 
                 </div>
             </div>

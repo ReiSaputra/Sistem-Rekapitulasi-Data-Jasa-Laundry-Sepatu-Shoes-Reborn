@@ -14,35 +14,28 @@ if (!isset($_SESSION["username"])) {
     exit();
 }
 
-$sql = "SELECT p.*, c.*, e.*, t.* FROM production_detail AS p
-        INNER JOIN client AS c ON p.production_id_client = c.client_id
-        INNER JOIN employee AS e ON p.production_id_employee = e.employee_id
-        INNER JOIN treatment_detail AS t ON p.production_id_treatment_dtl = t.treatment_id
-        ORDER BY p.production_nama ASC";
+// Mekanisme Deadline
+$dateString = date("Y-m-d");
+$timestamp = strtotime($nowDate);
+$integerDate = (int) $timestamp;
 
-$query = mysqli_query(mySqlConnection(), $sql);
+$sqlDeadlineChanger = "SELECT production_deadline FROM production_detail";
 
-while ($row = mysqli_fetch_assoc($query)) {
-    $item[] = $row;
+$queryDeadline = mysqli_query(mySqlConnection(), $sqlDeadlineChanger);
+
+while ($fetch = mysqli_fetch_assoc($queryDeadline)) {
+    foreach ($fetch as $row) {
+        $dateIntoTime = strtotime($row);
+        $timeIntoInt = (int) $dateIntoTime;
+    }
 }
 
-$sqlAssignment = "SELECT COUNT(production_id) FROM production_detail";
+if ($integerDate >= $timeIntoInt) {
+    $sqlDeadlineChanging = "UPDATE production_detail
+                          SET production_status = 'Tidak Selesai' WHERE production_status = 'Proses'";
 
-$sqlAssignmentQuery = mysqli_query(mySqlConnection(), $sqlAssignment);
-$numberData0 = mysqli_fetch_assoc($sqlAssignmentQuery);
-
-$sqlProccess = "SELECT COUNT(production_status)FROM production_detail
-                WHERE production_status = 'Tidak Selesai'";
-
-
-$sqlProccessQuery = mysqli_query(mySqlConnection(), $sqlProccess);
-$numberData1 = mysqli_fetch_assoc($sqlProccessQuery);
-
-$sqlDone = "SELECT COUNT(production_status) FROM production_detail
-            WHERE production_status = 'Selesai'";
-
-$sqlDoneQuery = mysqli_query(mySqlConnection(), $sqlDone);
-$numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
+    $queryChanger = mysqli_query(mySqlConnection(), $sqlDeadlineChanging);
+}
 ?>
 
 <!DOCTYPE html>
@@ -146,7 +139,7 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
                 <div>
                     <div class="tab borders d-flex align-items-center p-3">
                         <i class="fa fa-search ms-3"></i>
-                        <h4 class="borders ms-3 mt-2"><strong>Histori Pengerjaan</strong></h4>
+                        <h4 class="borders ms-3 mt-2"><strong>Dashboard</strong></h4>
                     </div>
                 </div>
                 <!-- Tab Menu -->
@@ -157,10 +150,8 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
                                 <i class="y fa-regular fa-clipboard"></i>
                             </div>
                             <div class="tab-box-title ms-2">
-                                <h6 class="tab-title"><strong>Total Pengerjaan</strong></h6>
-                                <h6 class="tab-number">
-                                    <?php echo $numberData0["COUNT(production_id)"]; ?>
-                                </h6>
+                                <h6 class="tab-title"><strong>Total Pembelian</strong></h6>
+                                <h6 class="tab-number">5</h6>
                             </div>
                         </div>
                         <div class="col-4 border d-flex justify-content-start align-items-center">
@@ -168,10 +159,8 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
                                 <i class="r fa-solid fa-timeline"></i>
                             </div>
                             <div class="tab-box-title ms-2">
-                                <h6 class="tab-title"><strong>Total Tidak Selesai</strong></h6>
-                                <h6 class="tab-number">
-                                    <?php echo $numberData1["COUNT(production_status)"]; ?>
-                                </h6>
+                                <h6 class="tab-title"><strong>Total Harga</strong></h6>
+                                <h6 class="tab-number">5</h6>
                             </div>
                         </div>
                         <div class="col-4 border d-flex justify-content-start align-items-center">
@@ -179,66 +168,47 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
                                 <i class="g fa-solid fa-check"></i>
                             </div>
                             <div class="tab-box-title ms-2">
-                                <h6 class="tab-title"><strong>Total Selesai</strong></h6>
-                                <h6 class="tab-number">
-                                    <?php echo $numberData2["COUNT(production_status)"]; ?>
-                                </h6>
+                                <h6 class="tab-title"><strong>Jumlah Harga</strong></h6>
+                                <h6 class="tab-number">5</h6>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="tabless mt-4 ps-4 pe-4 pb-4">
+                    <div class="insert-menu borders d-flex justify-content-end mb-3">
+                        <a class="btn ps-5 pe-5 btn-outline-dark" href="tambahPembelian.php"> <img src=""
+                                alt="" />Tambah
+                            Pembelian</a>
+                    </div>
                     <table class="table">
                         <thead>
                             <tr>
                                 <th scope="col">No</th>
                                 <th scope="col">Nama Barang</th>
-                                <th scope="col">Client</th>
-                                <th scope="col">Karyawan</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Deadline</th>
+                                <th scope="col">Tanggal Pembelian</th>
+                                <th scope="col">Pengajuan</th>
+                                <th scope="col">Harga</th>
                                 <th scope="col">Opsi</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $i = 1; ?>
-                            <?php foreach ($item as $rowItem) { ?>
-                                <tr>
-                                    <th scope="row">
-                                        <?php echo $i; ?>
-                                    </th>
-                                    <td>
-                                        <?php echo $rowItem["production_nama"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $rowItem["client_name"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $rowItem["employee_username"]; ?>
-                                    </td>
-                                    <?php if ($rowItem["production_status"] == "Proses") { ?>
-                                        <td style="color: #edc511;">
-                                        <?php } else if ($rowItem["production_status"] == "Selesai") { ?>
-                                            <td style="color: #198754;">
-                                        <?php } else if ($rowItem["production_status"] == "Tidak Selesai") { ?>
-                                                <td style="color: #b40d0d;">
-                                        <?php } ?>
-                                        <?php echo $rowItem["production_status"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $rowItem["production_deadline"]; ?>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <a class="btn btn-primary"
-                                                href="detailPengerjaanAlt.php?id=<?php echo $rowItem["production_id"]; ?>"><i
-                                                    class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <?php $i++; ?>
-                            <?php } ?>
-
+                            <tr>
+                                <th scope="row">1</th>
+                                <td>Kain Lap</td>
+                                <td>15 November 2023</td>
+                                <td>Adi</td>
+                                <td>Rp. 150.000.00</td>
+                                <td>
+                                    <div>
+                                        <a class="btn btn-success" href="detailPembelian.html"><img src="" alt="" /><i
+                                                class="fa-solid fa-check me-2"></i>Selesai</a>
+                                        <a class="btn btn-primary" href="detailPembelian.html"><img src="" alt="" /><i
+                                                class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
+                                        <a class="btn btn-danger" href="detailPembelian.html"><img src="" alt="" /><i
+                                                class="fa-solid fa-trash me-2"></i>Hapus</a>
+                                    </div>
+                                </td>
+                            </tr>
                         </tbody>
                     </table>
                 </div>

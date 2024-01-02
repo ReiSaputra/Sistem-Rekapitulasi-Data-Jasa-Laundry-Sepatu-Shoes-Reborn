@@ -1,6 +1,7 @@
 <?php
 session_start();
 error_reporting(0);
+date_default_timezone_set('Asia/Jakarta');
 
 require_once __DIR__ . "/../../../model/connection.php";
 
@@ -12,7 +13,7 @@ if (!isset($_SESSION["usernameEmp"])) {
 
 $nowDate = date('Y-m-d');
 
-$sql = "SELECT * FROM report";
+$sql = "SELECT * FROM report WHERE report_date = '$nowDate'";
 
 $query = mysqli_query(mySqlConnection(), $sql);
 
@@ -21,17 +22,17 @@ while ($row = mysqli_fetch_assoc($query)) {
     // var_dump($item);
 }
 
-$sqlAssignment = "SELECT COUNT(report_status) FROM report";
+$sqlAssignment = "SELECT COUNT(report_status) FROM report WHERE report_date = '$nowDate'";
 
 $sqlAssignmentQuery = mysqli_query(mySqlConnection(), $sqlAssignment);
 $numberData0 = mysqli_fetch_assoc($sqlAssignmentQuery);
 
-$sqlProccess = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Belum Dilihat'";
+$sqlProccess = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Belum Dilihat' AND report_date = '$nowDate'";
 
 $sqlProccessQuery = mysqli_query(mySqlConnection(), $sqlProccess);
 $numberData1 = mysqli_fetch_assoc($sqlProccessQuery);
 
-$sqlDone = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Dilihat'";
+$sqlDone = "SELECT COUNT(report_status) FROM report WHERE report_status = 'Dilihat' AND report_date = '$nowDate'";
 
 $sqlDoneQuery = mysqli_query(mySqlConnection(), $sqlDone);
 $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
@@ -115,7 +116,7 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
                 <div>
                     <div class="tab borders d-flex align-items-center p-3">
                         <i class="fa fa-search ms-3"></i>
-                        <h4 class="borders ms-3 mt-2"><strong>Data Pengerjaan</strong></h4>
+                        <h4 class="borders ms-3 mt-2"><strong>Buat Laporan</strong></h4>
                     </div>
                 </div>
                 <!-- Tab Menu -->
@@ -141,7 +142,7 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
                                 <i class="r fa-solid fa-timeline"></i>
                             </div>
                             <div class="tab-box-title ms-2">
-                                <h6 class="tab-title"><strong>Diterima</strong></h6>
+                                <h6 class="tab-title"><strong>Belum Dilihat</strong></h6>
                                 <h6 class="tab-number">
                                     <?php
                                     foreach ($numberData1 as $dataProses1) {
@@ -156,7 +157,7 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
                                 <i class="g fa-solid fa-check"></i>
                             </div>
                             <div class="tab-box-title ms-2">
-                                <h6 class="tab-title"><strong>Ditolak</strong></h6>
+                                <h6 class="tab-title"><strong>Dibaca</strong></h6>
                                 <h6 class="tab-number">
                                     <?php
                                     foreach ($numberData2 as $dataProses2) {
@@ -173,65 +174,28 @@ $numberData2 = mysqli_fetch_assoc($sqlDoneQuery);
                         <a class="btn ps-5 pe-5 btn-outline-dark" href="tambahLaporan.php">Tambah
                             Laporan</a>
                     </div>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th scope="col">No</th>
-                                <th scope="col">Nama Barang</th>
-                                <th scope="col">Client</th>
-                                <th scope="col">Jenis Treatment</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Deadline</th>
-                                <th scope="col">Opsi</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <?php $i = 1; ?>
+                    <div class="container-fluid">
+                        <div class="row">
                             <?php foreach ($item as $rowItem) { ?>
-                                <tr>
-                                    <th scope="row">
-                                        <?php echo $i; ?>
-                                    </th>
-                                    <td>
-                                        <?php echo $rowItem["production_nama"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $rowItem["client_name"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $rowItem["treatment_name"]; ?>
-                                    </td>
-                                    <?php if ($rowItem["production_status"] == "Proses") { ?>
-                                        <td style="color: #edc511;">
-                                        <?php } else if ($rowItem["production_status"] == "Selesai") { ?>
-                                            <td style="color: #198754;">
-                                        <?php } ?>
-                                        <?php echo $rowItem["production_status"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $rowItem["production_deadline"]; ?>
-                                    </td>
-                                    <td>
-                                        <div>
-                                            <?php if ($rowItem["production_status"] == "Proses") { ?>
-                                                <a class="btn btn-success"
-                                                    href="donePengerjaan.php?id=<?php echo $rowItem["production_id"]; ?>"><i
-                                                        class="fa-solid fa-check me-2"></i>Selesai</a>
-                                                <a class="btn btn-primary"
-                                                    href="detailPengerjaan.php?id=<?php echo $rowItem["production_id"]; ?>"><i
-                                                        class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
-                                            <?php } else if ($rowItem["production_status"] == "Selesai") { ?>
-                                                    <a class="btn btn-primary"
-                                                        href="detailPengerjaanAlt.php?id=<?php echo $rowItem["production_id"]; ?>"><i
-                                                            class="fa-solid fa-magnifying-glass me-2"></i>Detail</a>
-                                            <?php } ?>
+                                <a href="cekLaporan.php?id=<?php echo $rowItem["report_id"]; ?>"
+                                    class="col-12 border mt-3 p-3 bg-secondary-subtle rounded" style="color: #090927;">
+                                    <div class="d-flex justify-content-between">
+                                        <div class="">
+                                            <h4><strong>
+                                                    <?php echo $rowItem["report_title"]; ?>
+                                                </strong></h4>
+                                            <p>
+                                                <?php echo $rowItem["report_date"]; ?>
+                                            </p>
                                         </div>
-                                    </td>
-                                </tr>
-                                <?php $i++; ?>
+                                        <div class=" d-flex align-items-center">
+                                            <?php echo $rowItem["report_status"]; ?>
+                                        </div>
+                                    </div>
+                                </a>
                             <?php } ?>
-                        </tbody>
-                    </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

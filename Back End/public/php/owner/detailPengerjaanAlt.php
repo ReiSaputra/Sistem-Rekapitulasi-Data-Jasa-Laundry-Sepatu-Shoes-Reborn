@@ -32,9 +32,9 @@ while ($queryTrtAssoc = mysqli_fetch_assoc($queryTrt)) {
 
 $newDate = date("Y-m-d");
 // Jika tidak ada data yang dikirimkan dari login Owner tidak ada key username dan id
-if (!isset($_SESSION["usernameEmp"])) {
+if (!isset($_SESSION["username"])) {
     // Jika Benar salah
-    header("Location: ../login/loginEmployee.php");
+    header("Location: ../login/loginOwner.php");
 }
 
 if (isset($_POST["submit2"])) {
@@ -87,7 +87,7 @@ if (isset($_POST["submit2"])) {
                 <!-- Profile -->
                 <div class="profile p-3">
                     <h6 class="borders p-2 mb-0"><a href="cekData.html">
-                            <?php echo $_SESSION["usernameEmp"]; ?>
+                            <?php echo $_SESSION["username"]; ?>
                         </a></h6>
                     <h6 class="borders mb-0 p-2">Karyawan</h6>
                 </div>
@@ -95,30 +95,57 @@ if (isset($_POST["submit2"])) {
                 <div class="board borders p-3">
                     <!-- Dashboard -->
                     <div class="dashboard borders">
-                        <h6 class="title-dashboard borders p-2"><strong>DASHBOARD</strong></h6>
+                        <h6 class="title-dashboard borders p-2"><strong>LAPORAN KARYAWAN</strong></h6>
                         <!-- Dashboard-Child -->
                         <ul class="dashboard-child borders ps-4">
-                            <a href="lobbyPengerjaan.php">
+                            <a href="lobbyOwner.php">
                                 <li class="list borders d-flex p-2">
                                     <img src="" alt="" />
-                                    <h6>Data Pengerjaan</h6>
+                                    <h6>Dashboard</h6>
                                 </li>
                             </a>
                         </ul>
                     </div>
                     <!-- Report -->
                     <div class="report borders">
-                        <h6 class="title-report borders p-2"><strong>LAPORAN</strong></h6>
+                        <h6 class="title-report borders p-2"><strong>HISTORI</strong></h6>
                         <!-- Report-Child -->
                         <ul class="report-child borders ps-4">
-                            <a href="cekLaporan.php">
+                            <a href="historiPengerjaan.php">
                                 <li class="list borders d-flex p-2">
                                     <img src="" alt="" />
-                                    <h6>Buat Laporan</h6>
+                                    <h6>Histori Pengerjaan</h6>
                                 </li>
                             </a>
                         </ul>
                     </div>
+                    <div class="report borders">
+                        <h6 class="title-report borders p-2"><strong>KARYAWAN</strong></h6>
+                        <!-- Report-Child -->
+                        <ul class="report-child borders ps-4">
+                            <a href="dataKaryawan.php">
+                                <li class="list borders d-flex p-2">
+                                    <img src="" alt="" />
+                                    <h6>Data Karyawan</h6>
+                                </li>
+                            </a>
+                            <a href="tambahKaryawan.php">
+                                <li class="list borders d-flex p-2">
+                                    <img src="" alt="" />
+                                    <h6>Buat Akun</h6>
+                                </li>
+                            </a>
+                            <a href="laporanKaryawan.php">
+                                <li class="list borders d-flex p-2">
+                                    <img src="" alt="" />
+                                    <h6>Laporan Karyawan</h6>
+                                </li>
+                            </a>
+                        </ul>
+                    </div>
+                    <a href="../logout/logout.php" class="text-danger">
+                        <h6 class="title-report borders p-2"><strong>LOGOUT</strong></h6>
+                    </a>
                 </div>
             </div>
             <!-- Data-Table -->
@@ -188,17 +215,11 @@ if (isset($_POST["submit2"])) {
                                 <label for="floatingTextarea">Detail</label>
                             </div>
                         </div>
-                        <!-- Hidden Pegawai -->
-                        <div class="mb-3">
-                            <input type="hidden" class="form-control" id="exampleInputEmail1"
-                                aria-describedby="emailHelp" value="<?php echo $_SESSION["usernameEmp"] ?>"
-                                autocomplete="off" name="namaPegawai" />
-                        </div>
                         <!-- Tampilan -->
                         <div class="mb-3">
                             <label for="exampleInputEmail1" class="form-label">Pegawai</label>
                             <input type="text" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                value="<?php echo $_SESSION["usernameEmp"] ?>" autocomplete="off" disabled />
+                                value="<?php echo $row[0]["employee_username"] ?>" autocomplete="off" disabled />
                         </div>
                         <!-- Tampilan -->
                         <div class="mb-3">
@@ -221,7 +242,7 @@ if (isset($_POST["submit2"])) {
                         </div>
                     </form>
 
-                    <a href="lobbyPengerjaan.php" class="btn btn-outline-primary">Cancel</a>
+                    <a href="historiPengerjaan.php" class="btn btn-outline-primary">Cancel</a>
 
                 </div>
             </div>
